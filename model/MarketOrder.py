@@ -5,9 +5,6 @@
     Amount	:数量
 }
 '''
-
-#!/bin/python
-from datetime import datetime
 import copy
 
 

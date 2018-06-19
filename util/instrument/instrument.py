@@ -6,17 +6,22 @@ class Instrument(object):
                  exchange_name,
                  instmt_name,
                  instmt_code,
+                 base_coin,
+                 quote_coin,
                  **param):
         """
         Constructor
         :param exchange: Exchange name
-        :param instmt_code: Instrument code
+        :param base_coin: Base coin
+        :param quote_coin: Quote coin
         :param param: Options parameters, e.g. restful_order_book_link
         :return:
         """
         self.exchange_name = exchange_name
         self.instmt_name = instmt_name
         self.instmt_code = instmt_code
+        self.base_coin = base_coin
+        self.quote_coin = quote_coin
         self.instmt_snapshot_table_name = ''
         self.order_book_id = 0
         self.trade_id = 0
@@ -38,6 +43,8 @@ class Instrument(object):
         self.exchange_name = obj.exchange_name
         self.instmt_name = obj.instmt_name
         self.instmt_code = obj.instmt_code
+        self.base_coin = obj.base_coin
+        self.quote_coin = obj.quote_coin
         self.instmt_snapshot_table_name = obj.instmt_snapshot_table_name
         self.order_book_id = obj.order_book_id
         self.trade_id = obj.trade_id
@@ -62,6 +69,12 @@ class Instrument(object):
 
     def get_instmt_code(self):
         return self.instmt_code
+
+    def get_base_coin(self):
+        return self.base_coin
+
+    def get_quote_coin(self):
+        return self.quote_coin
 
     def get_instmt_snapshot_table_name(self):
         return self.instmt_snapshot_table_name

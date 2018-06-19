@@ -28,15 +28,19 @@ class SubscriptionManager:
         exchange_name = self.config.get(instmt_id, 'exchanges')
         instmt_name = self.config.get(instmt_id, 'instmt_name')
         instmt_code = self.config.get(instmt_id, 'instmt_code')
+        base_coin = self.config.get(instmt_id,'base_coin')
+        quote_coin = self.config.get(instmt_id, 'quote_coin')
         enabled = int(self.config.get(instmt_id, 'enabled'))
         params = dict(self.config.items(instmt_id))
         del params['exchanges']
         del params['instmt_name']
         del params['instmt_code']
+        del params['base_coin']
+        del params['quote_coin']
         del params['enabled']
         
         if enabled == 1:
-            return Instrument(exchange_name, instmt_name, instmt_code, **params)
+            return Instrument(exchange_name, instmt_name, instmt_code, base_coin, quote_coin,**params)
         else:
             return None
         

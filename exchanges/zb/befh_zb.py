@@ -1,6 +1,6 @@
 from befh.ws_api_socket import WebSocketApiClient
 from befh.market_data import L2Depth, Trade
-from befh.exchange import ExchangeGateway
+from befh.exchanges.gateway import ExchangeGateway
 from befh.instrument import Instrument
 from befh.util import Logger
 import time

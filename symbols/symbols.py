@@ -1,25 +1,25 @@
 import talang.util.util_data as talang_util
 
 """
-交易币种(tradecoin):btc,eth,bch,eos,xrp,ltc......
-基准币种(basecoin):usdt,btc,eth;此外okex有bch,zb有qc，暂不考虑
-交易站点(exchanges):huobipro,okex,zb....
+定价币种(quote_coin):usdt,btc,eth;此外okex有bch,zb有qc，暂不考虑
+基础币种(base_coin):btc,eth,bch,eos,xrp,ltc......
+交易站点(exchange_name):huobipro,okex,zb....
 """
 
-def get_trade_symbol(tradecoin,basecoin,exchange):
+def format_symbol(base_coin,quote_coin,exchange_name):
     
-    tradecoin=tradecoin.lower()
-    basecoin=basecoin.lower()
-    exchange=exchange.lower()
+    quotecoin=quote_coin.lower()
+    basecoin=base_coin.lower()
+    exchange=exchange_name.lower()
     
-    if basecoin not in talang_util.support_basecoin:
-        return "err:basecoin is not supported"
+    if quotecoin not in talang_util.support_quotecoin:
+        return "err:quotecoin is not supported"
     if exchange not in talang_util.support_exchange:
         return "err:exchanges is not supported"
-    if basecoin == tradecoin or tradecoin=="usdt":
+    if basecoin == quotecoin or base_coin=="usdt":
         return "err:not right trade coin pair "
     
-    if exchange == "huobipro" :
-        return tradecoin+basecoin
+    if exchange == "huobipro" or exchange == "huobi":
+        return basecoin+quotecoin
     else :
-        return tradecoin+"_"+basecoin
+        return basecoin+"_"+quotecoin

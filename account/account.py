@@ -24,7 +24,7 @@ class account():
     
         return "ok"
     
-    def get_all_symbols_btc_usdt_cny():
+    def get_all_symbols_btc_usdt_cny(self):
         '''
         return as keys:
         {
@@ -79,11 +79,11 @@ class account():
         
         return 0
     
-    def get_account_huobipro():
+    def get_account_huobipro(self):
     
         return "ok"
 
-    def get_account_okex():
+    def get_account_okex(self):
         
         res=okcoinSpot.userInfo()
         info=res["info"]
@@ -97,7 +97,7 @@ class account():
                 print("currency:"+keys[i]+",free:"+free[keys[i]]+",frozen:"+freezed[keys[i]]+",borrow:"+borrow[keys[i]])
         return "ok"
 
-    def get_account_zb():
+    def get_account_zb(self):
     
         return "ok"
 
