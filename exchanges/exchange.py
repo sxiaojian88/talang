@@ -1,9 +1,7 @@
-from talang.util.instrument.instrument import Instrument
 import time
 from datetime import datetime
 import talang.exchanges.okex.util as okex_util
-from talang.symbols import symbols
-
+from talang.util.symbols import symbols
 
 '''
 ============================================================
@@ -100,7 +98,7 @@ class Exchange:
     def GetDepth(self):
         raw = ''
         if(self.exchange_name == 'okex'):
-            raw = self.okexSpot.depth(symbols.format_symbol(self.base_coin, self.quote_coin, self.exchange_name),5)
+            raw = self.okexSpot.depth(symbols.format_symbol(self.base_coin, self.quote_coin, self.exchange_name), 5)
 
         else:
             return ''

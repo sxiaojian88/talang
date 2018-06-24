@@ -1,8 +1,7 @@
 '''
 在不同的相近模式（model）之间进行转换
 '''
-from befh.market_data import L2Depth
-from talang.model.Depth import Depth
+from talang.util.model.Depth import Depth
 
 
 def l2depth_to_depth(l2depth):

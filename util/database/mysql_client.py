@@ -1,4 +1,4 @@
-from talang.database.sql_client import SqlClient
+from talang.util.database import SqlClient
 import pymysql
 
 

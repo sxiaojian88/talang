@@ -1,5 +1,5 @@
 from datetime import datetime
-from talang.model.MarketOrder import MarketOrder
+from talang.util.model import MarketOrder
 
 '''
 获取所有交易历史(非自己),由GetTrades函数返回。

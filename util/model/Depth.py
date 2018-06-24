@@ -1,5 +1,5 @@
 from datetime import datetime
-from talang.model.MarketOrder import MarketOrder
+from talang.util.model import MarketOrder
 '''
 市场深度,由GetDepth函数返回
 {
