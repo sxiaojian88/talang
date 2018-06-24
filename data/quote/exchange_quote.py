@@ -25,7 +25,7 @@ import numpy
 import json
 import talang.util.util_data as ut
 
-connect_to = 'tcp://119.28.51.224:5001'
+connect_to = 'tcp://172.19.0.3:5001'
 
 class exchange_quote():
 
