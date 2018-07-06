@@ -9,14 +9,6 @@
 '''
 #!/bin/python
 from datetime import datetime
-import copy
-
-'''
-                print("currency:"+cur+",free:"+fre+",frozen:"+frd+",borrow:"+bor+ \
-                      ",btc_value:%f" % t_btc_value + ",usdt_value:%f" % t_usdt_value +"(usdt_price:%f)" %usdt_value  )
-        print("-----------------------------------------------------------------------------")
-        print("total_btc:%f" %total_btc + ",total_usdt:%f" %total_usdt + ",total_cny:%f" %self.get_cny_value(total_usdt) )
-        '''
 
 
 class Balance:
@@ -35,7 +27,7 @@ class Balance:
         self.occupy = 0.0       # 此币种占此账号总资产占比多少（33.88百分制表示）
 
 
-class Spot_Account:
+class SpotAccount:
     def __init__(self):
         self.exchange = ''          #此账号所属交易所，如果是所有交易所总和统计，以ALL表示
         self.time = datetime.now().strftime("%Y%m%d %H:%M:%S.%f")  #统计时点时间

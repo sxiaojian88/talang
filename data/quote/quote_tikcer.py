@@ -9,11 +9,12 @@ okexcoinSpot = okex_util.getOkcoinSpot()
 # 期货API
 okexcoinFuture = okex_util.getOkcoinFuture()
 
-class quote_tiker():
+
+class QuoteTiker():
 
         def get_tiker_value(self, exchange, base_coin, quote_coin):
             tiker = Ticker()
-            ex_qt = quote_tiker()
+            ex_qt = QuoteTiker()
             msg = ex_qt.get_msg(exchange, base_coin, quote_coin)
             # Date time
             timestamp = float(msg["date"])
@@ -45,7 +46,7 @@ class quote_tiker():
 
 
 if __name__ == '__main__':
-    ex_qt = quote_tiker()
+    ex_qt = QuoteTiker()
     exchange_name = 'okex'
     base_coin = 'eos'
     quote_coin = 'usdt'

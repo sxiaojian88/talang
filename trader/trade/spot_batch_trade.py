@@ -9,7 +9,7 @@ okexcoinSpot = okex_util.getOkcoinSpot()
 okexcoinFuture = okex_util.getOkcoinFuture()
 
 
-class spot_batch_trade():
+class SpotBatchTrade:
 
         def get_spot_batch_trade_result(self, exchange, base_coin, quote_coin, tradeType,orders_data):
             '''
@@ -17,7 +17,7 @@ class spot_batch_trade():
             {"result":true,"order_id":123456}
             '''
             trade = Trade()
-            ex_qt = spot_batch_trade()
+            ex_qt = SpotBatchTrade()
             msg = ex_qt.post_trade(exchange, base_coin, quote_coin,tradeType,orders_data)
             trade.Result = msg['result']    #'result': True
             trade.Trade_id = msg['order_id']
@@ -42,7 +42,7 @@ class spot_batch_trade():
             return msg
 
 if __name__ == '__main__':
-    ex_qt = spot_batch_trade()
+    ex_qt = SpotBatchTrade()
     exchange_name = 'okex'
     base_coin = 'eos'
     quote_coin = 'usdt'

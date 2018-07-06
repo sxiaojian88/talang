@@ -6,15 +6,11 @@ import talang.util.model.Account as acct
 
 # 现货API
 okcoinSpot = okex_util.getOkcoinSpot()
-
 # 期货API
 okcoinFuture = okex_util.getOkcoinFuture()
 
-#美元汇率
-USDT_CNY=6.45
 
-
-class account_api():
+class AccountApi():
     """
     {
     'currency': 'QC', 
@@ -39,25 +35,25 @@ class account_api():
             return value_btc
         #其他合法性判断，如symbol的值
         if symbol.lower() == ut.USDT_COIN.lower():
-            value_usdt = ex_quote_api.exchange_quote_api.get_buy_1_value(self, exchange, ut.BTC_COIN.upper(), symbol.upper())
+            value_usdt = ex_quote_api.ExchangeQuoteApi.get_buy_1_value(self, exchange, ut.BTC_COIN.upper(), symbol.upper())
             if value_usdt != 0:
                 value_btc = 1/float(value_usdt)
 
         else:
-            value_btc=ex_quote_api.exchange_quote_api.get_buy_1_value(self, exchange, symbol.upper(), ut.BTC_COIN.upper())
+            value_btc=ex_quote_api.ExchangeQuoteApi.get_buy_1_value(self, exchange, symbol.upper(), ut.BTC_COIN.upper())
 
         return value_btc
 
     def get_usdt_value_by_symbol(self,exchange,symbol):
         value_usdt = 1.0
         if symbol.lower() != ut.USDT_COIN.lower():
-            value_usdt = ex_quote_api.exchange_quote_api.get_buy_1_value(self, exchange, symbol.upper(), ut.USDT_COIN.upper())
+            value_usdt = ex_quote_api.ExchangeQuoteApi.get_buy_1_value(self, exchange, symbol.upper(), ut.USDT_COIN.upper())
 
         return value_usdt
     
     def get_cny_value(self, usdtvalue):
         
-        return USDT_CNY*usdtvalue
+        return ut.USDT_CNY*usdtvalue
     
     def get_account_huobipro(self):
     
@@ -75,7 +71,7 @@ class account_api():
         total_btc = 0.0
         total_usdt = 0.0
 
-        okex_account = acct.Spot_Account()
+        okex_account = acct.SpotAccount()
         okex_account.exchange = ut.okex_exchange
 
         for i in range(0, len(keys)):
@@ -123,6 +119,6 @@ class account_api():
 
 
 if __name__ == "__main__":
-    act = account_api()
+    act = AccountApi()
     okex_account = act.get_account_okex()
     okex_account.print_detail()

@@ -6,7 +6,7 @@ def main():
     #act = act_zmq.account_zmq()
 
     #以Tiker行情数据计算okex资产
-    act = act_api.account_api()
+    act = act_api.AccountApi()
     okex_account = act.get_account_okex()
     okex_account.print_detail()
 

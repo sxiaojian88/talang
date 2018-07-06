@@ -13,7 +13,8 @@ huobipro_exchange = "HuoBiPro"
 #okex exchange名
 okex_exchange = "OkEx"
 
-
+#美元汇率
+USDT_CNY=6.45
 
 def get_symbol(exchange, base_coin, quote_coin):
     # 组合symbol值

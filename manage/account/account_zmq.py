@@ -5,15 +5,11 @@ import talang.util.util_data as ut
 
 # 现货API
 okcoinSpot = okex_util.getOkcoinSpot()
-
 # 期货API
 okcoinFuture = okex_util.getOkcoinFuture()
 
-#美元汇率
-USDT_CNY=6.45
 
-
-class account_zmq():
+class AccountZmq():
     def get_account_by_exchange(self,exchange):
         return "ok"
     
@@ -26,25 +22,25 @@ class account_zmq():
             return value_btc
         #其他合法性判断，如symbol的值
         if symbol.lower() == ut.USDT_COIN.lower():
-            value_usdt = ex_quote.exchange_quote_zmq.get_buy_1_value(self, exchange, ut.BTC_COIN.upper(), symbol.upper())
+            value_usdt = ex_quote.ExchangeQuoteZmq.get_buy_1_value(self, exchange, ut.BTC_COIN.upper(), symbol.upper())
             if value_usdt != 0:
                 value_btc = 1/float(value_usdt)
 
         else:
-            value_btc=ex_quote.exchange_quote_zmq.get_buy_1_value(self, exchange, symbol.upper(), ut.BTC_COIN.upper())
+            value_btc=ex_quote.ExchangeQuoteZmq.get_buy_1_value(self, exchange, symbol.upper(), ut.BTC_COIN.upper())
 
         return value_btc
 
     def get_usdt_value_by_symbol(self,exchange,symbol):
         value_usdt = 1.0
         if symbol.lower() != ut.USDT_COIN.lower():
-            value_usdt = ex_quote.exchange_quote_zmq.get_buy_1_value(self, exchange, symbol.upper(), ut.USDT_COIN.upper())
+            value_usdt = ex_quote.ExchangeQuoteZmq.get_buy_1_value(self, exchange, symbol.upper(), ut.USDT_COIN.upper())
 
         return value_usdt
     
     def get_cny_value(self, usdtvalue):
         
-        return USDT_CNY*usdtvalue
+        return ut.USDT_CNY*usdtvalue
     
     def get_account_huobipro(self):
     
@@ -89,7 +85,7 @@ class account_zmq():
 
 
 if __name__ == "__main__":
-    act=account_zmq()
+    act=AccountZmq()
     act.get_account_okex()
 
     '''

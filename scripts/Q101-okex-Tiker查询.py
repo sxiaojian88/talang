@@ -4,7 +4,7 @@ import talang.data.quote.quote_tikcer as tiker_api;
 from talang.util.model.Ticker import Ticker
 def main():
 
-    ex_qt = tiker_api.quote_tiker()
+    ex_qt = tiker_api.QuoteTiker()
     exchange_name = 'okex'
     base_coin = 'eos'
     quote_coin = 'usdt'
