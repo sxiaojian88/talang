@@ -16,28 +16,26 @@ catch 'weather'.
 #  Distributed under the terms of the New BSD License.  The full license is in
 #  the file COPYING.BSD, distributed as part of this software.
 #-----------------------------------------------------------------------------
-
-import sys
-import time
+'''
+从BitcoinexchangeFH项目的zmq行情服务获取数据
+'''
 
 import zmq
-import numpy
-import json
 import talang.util.util_data as ut
 
 connect_to = 'tcp://172.19.0.3:5001'
 
-class exchange_quote():
+class exchange_quote_zmq():
 
     def get_buy_1_value(self,exchange,base_coin,quote_coin):
-        ex_qt = exchange_quote()
+        ex_qt = exchange_quote_zmq()
         msg=ex_qt.get_msg(exchange,base_coin,quote_coin)
         buy_1_price = float(msg['b1'])
 
         return buy_1_price
 
     def get_sell_1_value(self,exchange,base_coin,quote_coin):
-        ex_qt = exchange_quote()
+        ex_qt = exchange_quote_zmq()
         msg=ex_qt.get_msg(exchange,base_coin,quote_coin)
         sell_1_price = float(msg['a1'])
 
@@ -46,7 +44,7 @@ class exchange_quote():
     @classmethod
     def get_msg(cls,exchange,base_coin,quote_coin):
         #组合topic值
-        ex_qt = exchange_quote()
+        ex_qt = exchange_quote_zmq()
         topic = ex_qt.get_topic(exchange,base_coin,quote_coin)
         ctx = zmq.Context()
         s = ctx.socket(zmq.SUB)
@@ -75,7 +73,7 @@ class exchange_quote():
         return topic.encode()
 
 if __name__ == '__main__':
-    ex_qt=exchange_quote()
+    ex_qt=exchange_quote_zmq()
     exchange_name = 'okex'
     base_coin = 'EOS'
     quote_coin = 'BTC'

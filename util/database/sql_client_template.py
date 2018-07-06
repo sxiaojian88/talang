@@ -1,6 +1,6 @@
 #!/bin/python
 
-from talang.util.database import SqlClient
+from talang.util.database.sql_client import SqlClient
 from talang.util.Logger import Logger
 
 

@@ -1,6 +1,6 @@
 #!/bin/python
 
-from befh.sql_client import SqlClient
+from talang.util.database.sql_client import SqlClient
 import sqlite3
 
 

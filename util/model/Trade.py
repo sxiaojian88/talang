@@ -1,5 +1,5 @@
 from datetime import datetime
-from talang.util.model import MarketOrder
+from talang.util.model.MarketOrder import MarketOrder
 
 '''
 获取所有交易历史(非自己),由GetTrades函数返回。
@@ -23,30 +23,33 @@ class Trade:
         :param instmt: Instrument name
         :param default_format: Default date time format
         """
+        self.Result = ''    # result:True
         self.Time = datetime(2000, 1, 1, 0, 0, 0).strftime("%Y%m%d %H:%M:%S.%f")
         self.Trade_id = ''
         self.Price = 0.0
         self.Amount = 0.0
         self.Type = MarketOrder.Side.NONE
 
+
     @staticmethod
     def columns():
         """
         Return static columns names
         """
-        return ['time', 'trade_id', 'price', 'amount', 'type']
+        return ['result', 'time', 'trade_id', 'price', 'amount', 'type']
 
     @staticmethod
     def types():
         """
         Return static column types
         """
-        return ['varchar(25)', 'text', 'decimal(20,8)', 'decimal(20,8)', 'int']
+        return ['varchar(25)','varchar(25)', 'text', 'decimal(20,8)', 'decimal(20,8)', 'int']
 
     def values(self):
         """
         Return values in a list
         """
-        return [self.Time] + \
+        return [self.Result] + \
+               [self.Time] + \
                [self.Trade_id] + [self.Price] + [self.Amount] + [self.Type]
 

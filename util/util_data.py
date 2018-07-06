@@ -12,3 +12,13 @@ ETH_COIN = "ETH"
 huobipro_exchange = "HuoBiPro"
 #okex exchange名
 okex_exchange = "OkEx"
+
+
+
+def get_symbol(exchange, base_coin, quote_coin):
+    # 组合symbol值
+    if okex_exchange.lower() == exchange.lower():
+        topic = base_coin.upper() + '_' + quote_coin.upper()
+    else:
+        topic = base_coin.upper() + quote_coin.upper()
+    return topic

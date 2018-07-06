@@ -1,4 +1,4 @@
-from talang.util.database import DatabaseClient
+from talang.util.database.database_client import DatabaseClient
 from talang.util.Logger import Logger
 import threading
 import os
