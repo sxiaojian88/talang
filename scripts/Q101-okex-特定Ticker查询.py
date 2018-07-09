@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-import talang.data.quote.quote_tikcer as tiker_api;
+import talang.data.quote.quote_ticker as tiker_api;
 from talang.util.model.Ticker import Ticker
 def main():
 
-    ex_qt = tiker_api.QuoteTiker()
+    ex_qt = tiker_api.QuoteTicker()
     exchange_name = 'okex'
     base_coin = 'eos'
     quote_coin = 'usdt'

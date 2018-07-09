@@ -10,24 +10,25 @@ okexcoinSpot = okex_util.getOkcoinSpot()
 okexcoinFuture = okex_util.getOkcoinFuture()
 
 
-class QuoteTiker():
+class QuoteTicker():
 
         def get_tiker_value(self, exchange, base_coin, quote_coin):
-            tiker = Ticker()
-            ex_qt = QuoteTiker()
+            ticker = Ticker()
+            ex_qt = QuoteTicker()
             msg = ex_qt.get_msg(exchange, base_coin, quote_coin)
             # Date time
             timestamp = float(msg["date"])
-            tiker.Time= datetime.fromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S")
+            ticker.Time= datetime.fromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S")
             msg = msg["ticker"]
-            tiker.Buy = float(msg['buy'])
-            tiker.High = float(msg['high'])
-            tiker.Last = float(msg['last'])
-            tiker.Low = float(msg['low'])
-            tiker.Sell = float(msg['sell'])
-            tiker.Volume = float(msg['vol'])
-            tiker.Symbol = ut.get_symbol(exchange, base_coin, quote_coin)
-            return tiker
+            ticker.Buy = float(msg['buy'])
+            ticker.High = float(msg['high'])
+            ticker.Last = float(msg['last'])
+            ticker.Low = float(msg['low'])
+            ticker.Sell = float(msg['sell'])
+            ticker.Volume = float(msg['vol'])
+            ticker.Symbol = ut.get_symbol(exchange, base_coin, quote_coin)
+            ticker.cal_value()
+            return ticker
 
 
         @classmethod
@@ -46,11 +47,10 @@ class QuoteTiker():
 
 
 if __name__ == '__main__':
-    ex_qt = QuoteTiker()
+    ex_qt = QuoteTicker()
     exchange_name = 'okex'
     base_coin = 'eos'
     quote_coin = 'usdt'
     tk = Ticker()
     tk = ex_qt.get_tiker_value(exchange_name, base_coin, quote_coin)
-    print("date:%s" %tk.Time+",high:%f" %tk.High + ",vol:%f" %tk.Volume \
-          + ",last:%f" %tk.Last + ",low:%f" %tk.Low + ",buy:%f" %tk.Buy + ",sell:%f" %tk.Sell)
+    tk.print_detail()

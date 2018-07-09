@@ -20,6 +20,12 @@ class OKCoinSpot:
             params = 'symbol=%(symbol)s' % {'symbol': symbol}
         return httpGet(self.__url, TICKER_RESOURCE, params)
 
+    # 获取OKCOIN现货所有symbols行情信息
+    def tickers(self):
+        TICKER_RESOURCE = "/api/v1/tickers.do"
+        params = ''
+        return httpGet(self.__url, TICKER_RESOURCE, params)
+
     # 获取OKCOIN现货市场深度信息
     def depth(self, symbol='', size=1):
         DEPTH_RESOURCE = "/api/v1/depth.do"

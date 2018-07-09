@@ -41,7 +41,7 @@ class spot_order_query():
                 order.Type = result_order["type"]
                 order.Exchange = ut.okex_exchange
                 orders.add_order(order)
-            orders.sort_order()
+            orders.sort_orders_by_symbol()
             return orders
 
 

@@ -70,7 +70,7 @@ class Order:
 
     def print_detail(self):
         total_with = 12 + 9*15 + 20
-        print('=' * (total_with))
+        print('=' * total_with)
         format_tile = "%-10s%15s%15s%20s%15s" \
                       "%15s%15s%15s%15s" \
                       "%15s%15s"
@@ -96,12 +96,18 @@ class Orders:
     def add_order(self, order):
         self.Orders_list.append(order)
 
-    def sort_order(self):
-        self.Orders_list.sort(key=lambda x:x.Symbol, reverse=True)
+    def add_orders(self, orders):
+        if len(orders.Orders_list) > 0:
+            self.Orders_list.extend(orders.Orders_list)
+
+    def sort_orders_by_symbol(self):
+        self.Orders_list.sort(key=lambda x: x.Symbol, reverse=True)
 
     def print_detail(self):
+        if len(self.Orders_list) == 0:
+            return
         total_with = 12 + 9*15 + 20
-        print('=' * (total_with))
+        print('=' * total_with)
         format_tile = "%-10s%15s%15s%20s%15s" \
                       "%15s%15s%15s%15s" \
                       "%15s%15s"
