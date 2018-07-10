@@ -46,7 +46,7 @@ class ExchangeQuoteZmq:
     def get_msg(cls,exchange,base_coin,quote_coin):
         #组合topic值
         ex_qt = ExchangeQuoteZmq()
-        topic = ex_qt.get_topic(exchange,base_coin,quote_coin)
+        topic = ex_qt.get_topic(exchange, base_coin, quote_coin)
         ctx = zmq.Context()
         s = ctx.socket(zmq.SUB)
         s.connect(connect_to)

@@ -47,6 +47,6 @@ if __name__ == '__main__':
     base_coin = 'eos'
     quote_coin = 'usdt'
     tradeType = 'sell'
-    orders_data=''
+    orders_data = ''
     tk = ex_qt.get_spot_batch_trade_result(exchange_name, base_coin, quote_coin, tradeType, orders_data)
-    print('result:%s' %tk.Result + 'trade_id:%s' %tk.Trade_id)
+    print('result:%s' %tk.Result + ',trade_id:%s' %tk.Trade_id)

@@ -18,10 +18,13 @@ class SpotTrade:
             '''
             trade = Trade()
             ex_qt = SpotTrade()
-            msg = ex_qt.post_trade(exchange, base_coin, quote_coin,tradeType, price, amount)
+            msg = ex_qt.post_trade(exchange, base_coin, quote_coin, tradeType, price, amount)
             trade.Result = msg['result']    #'result': True
             trade.Trade_id = msg['order_id']
-            trade.Time = datetime.datetime.now()
+            trade.price = price
+            trade.amount = amount
+            trade.exchange = exchange
+            trade.time = datetime.now().strftime("%Y%m%d %H:%M:%S.%f")
 
             return trade
 

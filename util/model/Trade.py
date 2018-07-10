@@ -1,5 +1,6 @@
 from datetime import datetime
-from talang.util.model.MarketOrder import MarketOrder
+from talang.util.model.ModelBase import ModelBase
+import talang.util.util_data as ut
 
 '''
 获取所有交易历史(非自己),由GetTrades函数返回。
@@ -12,7 +13,7 @@ from talang.util.model.MarketOrder import MarketOrder
 '''
 
 
-class Trade:
+class Trade(ModelBase):
     """
     Trade. Container of date, time, trade price, volume and side.
     """
@@ -23,12 +24,11 @@ class Trade:
         :param instmt: Instrument name
         :param default_format: Default date time format
         """
-        self.Result = ''    # result:True
-        self.Time = datetime(2000, 1, 1, 0, 0, 0).strftime("%Y%m%d %H:%M:%S.%f")
-        self.Trade_id = ''
-        self.Price = 0.0
-        self.Amount = 0.0
-        self.Type = MarketOrder.Side.NONE
+        self.result = ''  # result:True
+        self.trade_id = ''
+        self.price = 0.0
+        self.amount = 0.0
+        self.type = ''      #买卖类型：限价单(buy/sell) 市价单(buy_market/sell_market)
 
 
     @staticmethod
@@ -36,20 +36,19 @@ class Trade:
         """
         Return static columns names
         """
-        return ['result', 'time', 'trade_id', 'price', 'amount', 'type']
+        return ['exchange', 'time', 'result', 'trade_id', 'price', 'amount', 'type']
 
     @staticmethod
     def types():
         """
         Return static column types
         """
-        return ['varchar(25)','varchar(25)', 'text', 'decimal(20,8)', 'decimal(20,8)', 'int']
+        return ['varchar(25)', 'text', 'varchar(25)', 'varchar(25)', 'decimal(20,8)', 'decimal(20,8)', 'varchar(25)']
 
     def values(self):
         """
         Return values in a list
         """
-        return [self.Result] + \
-               [self.Time] + \
-               [self.Trade_id] + [self.Price] + [self.Amount] + [self.Type]
+        return [self.exchange] + [self.time] + [self.result] + \
+               [self.trade_id] + [self.price] + [self.amount] + [self.type]
 
