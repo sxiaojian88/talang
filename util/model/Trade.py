@@ -52,3 +52,5 @@ class Trade(ModelBase):
         return [self.exchange] + [self.time] + [self.result] + \
                [self.trade_id] + [self.price] + [self.amount] + [self.type]
 
+
+

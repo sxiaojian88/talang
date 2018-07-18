@@ -2,7 +2,7 @@
 
 import talang.data.quote.quote_symbols as symbol_api
 from talang.util.model.Order import Orders
-import talang.trader.query.spot_order_query as spot_order_q;
+import talang.trader.query.spot_order_query as spot_order_q
 import time
 from datetime import datetime
 

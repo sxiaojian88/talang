@@ -1,6 +1,8 @@
 #!/usr/bin/env python
-import talang.manage.account.account_zmq as act_zmq;
-import talang.manage.account.account_api as act_api;
+import talang.manage.account.account_zmq as act_zmq
+import talang.manage.account.account_api as act_api
+
+
 def main():
 
     #act = act_zmq.account_zmq()

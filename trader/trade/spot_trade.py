@@ -30,7 +30,7 @@ class SpotTrade:
 
 
         @classmethod
-        def post_trade(cls, exchange, base_coin, quote_coin,tradeType, price='', amount=''):
+        def post_trade(cls, exchange, base_coin, quote_coin, tradeType, price='', amount=''):
             # 组合symbol值
             symbol = ut.get_symbol(exchange, base_coin, quote_coin)
             msg = ''

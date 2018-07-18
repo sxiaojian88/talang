@@ -16,6 +16,8 @@ okex_exchange = "OkEx"
 #美元汇率
 USDT_CNY=6.45
 
+MAX_BATCH_NUM_OKEX = 5
+
 def get_symbol(exchange, base_coin, quote_coin):
     # 组合symbol值
     if okex_exchange.lower() == exchange.lower():

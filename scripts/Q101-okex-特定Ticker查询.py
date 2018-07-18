@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-import talang.data.quote.quote_ticker as tiker_api;
+import talang.data.quote.quote_ticker as tiker_api
 from talang.util.model.Ticker import Ticker
+
+
 def main():
 
     ex_qt = tiker_api.QuoteTicker()

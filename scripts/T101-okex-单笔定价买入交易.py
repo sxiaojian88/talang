@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-import talang.trader.trade.spot_trade as spot_trad_api;
+import talang.trader.trade.spot_trade as spot_trad_api
 from talang.util.model.Trade import Trade
+
+
 def main():
 
     ex_qt = spot_trad_api.SpotTrade()
