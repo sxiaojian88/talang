@@ -31,7 +31,8 @@ class ExchangeQuoteApi():
             symbol = ut.get_symbol(exchange, base_coin, quote_coin)
             msg = ''
             if ut.okex_exchange.lower() == exchange.lower():
-                msg = okexcoinSpot.ticker(symbol)
+                msg = okexcoinSpot.ticker(str.lower(symbol))
+                #print(msg)
                 msg = msg["ticker"]
                 #print(msg)
             else:

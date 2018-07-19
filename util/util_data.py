@@ -21,16 +21,16 @@ MAX_BATCH_NUM_OKEX = 5
 def get_symbol(exchange, base_coin, quote_coin):
     # 组合symbol值
     if okex_exchange.lower() == exchange.lower():
-        topic = base_coin.upper() + '_' + quote_coin.upper()
+        topic = str.lower(base_coin) + '_' + str.lower(quote_coin)
     else:
-        topic = base_coin.upper() + quote_coin.upper()
+        topic = str.lower(base_coin) + str.lower(quote_coin)
     return topic
 
 def get_base_coin(exchange,symbol):
     bc = ''
     if okex_exchange.lower() == exchange.lower() and len(symbol) > 0:
         s = symbol.split('_')
-        bc = s[0]
+        bc = str.lower(s[0])
     else:
         bc = ''
 
@@ -40,7 +40,7 @@ def get_quote_coin(exchange,symbol):
     qc = ''
     if okex_exchange.lower() == exchange.lower() and len(symbol) > 0:
         s = symbol.split('_')
-        qc = s[1]
+        qc = str.lower(s[1])
     else:
         qc = ''
 

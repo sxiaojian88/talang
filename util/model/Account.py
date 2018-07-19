@@ -51,18 +51,20 @@ class SpotAccount:
     def print_detail(self):
 
 
-        total_with = 12 + 4*15 + 6*15 + 10
+        total_with = 12 + 4*15 + 6*15 + 10 + 10
         print('=' * (total_with))
-        format_tile = "%-12s%15s%15s%15s%15s%15s%15s%15s%15s%15s%15s%10s"
-        print(format_tile % ("Currency","free","frozen","borrow","totalnum", \
-                            "btc_price","btc_worth","usdt_price","usdt_worth", \
-                            "cny_price","cny_worth","occupy(%)"))
+        format_tile = "%-10s%-12s%15s%15s%15s%15s%15s%15s%15s%15s%15s%15s%10s"
+        print(format_tile % ("No.", "Currency", "free", "frozen", "borrow", "totalnum",\
+                            "btc_price", "btc_worth", "usdt_price", "usdt_worth",\
+                            "cny_price", "cny_worth", "occupy(%)"))
         print('-' * total_with)
-        format_value = "%-12s%15.8f%15.8f%15.8f%15.8f%15.8f%15.8f%15.4f%15.4f%15.4f%15.4f%10.2f"
+        format_value = "%-10d%-12s%15.8f%15.8f%15.8f%15.8f%15.8f%15.8f%15.4f%15.4f%15.4f%15.4f%10.2f"
+        i = 1
         for bl in self.balances:
-            print(format_value %(bl.currency,bl.free,bl.frozen,bl.borrow,bl.total_num, \
-                                 bl.btc_price,bl.btc_worth,bl.usdt_price,bl.usdt_worth, \
-                                 bl.cny_price,bl.cny_worth,bl.occupy))
+            print(format_value %(i, bl.currency, bl.free, bl.frozen, bl.borrow, bl.total_num, \
+                                 bl.btc_price, bl.btc_worth, bl.usdt_price, bl.usdt_worth, \
+                                 bl.cny_price, bl.cny_worth, bl.occupy))
+            i = i + 1
         print('-' * total_with)
         print("exchange:%-12s"%self.exchange +"time:%-30s" % self.time \
               +"total_btc:%-15.4f" % self.total_btc + "total_usdt:%-15.4f" % self.total_usdt + "total_cny:%-15.4f" % self.total_cny)

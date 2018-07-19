@@ -106,22 +106,24 @@ class Orders:
     def print_detail(self):
         if len(self.Orders_list) == 0:
             return
-        total_with = 12 + 9*15 + 20
+        total_with = 10 + 12 + 9*15 + 20
         print('=' * total_with)
-        format_tile = "%-10s%15s%15s%20s%15s" \
+        format_tile = "%-10s%-10s%15s%15s%20s%15s" \
                       "%15s%15s%15s%15s" \
                       "%15s%15s"
-        print(format_tile % ("exchange", "order_id", "orders_id", "create_date", "symbol",
+        print(format_tile % ("No.", "exchange", "order_id", "orders_id", "create_date", "symbol",
                              "amount", "price", "avg_price", "Deal_amount",
                              "status", "type"))
         print('-' * total_with)
-        format_value = "%-10s%15s%15s%20s%15s" \
+        format_value = "%-10d%-10s%15s%15s%20s%15s" \
                        "%15.8f%15.8f%15.4f%15.4f" \
                        "%15s%15s"
+        i = 1
         for order in self.Orders_list:
-            print(format_value % (order.Exchange, order.Order_id, order.Orders_id, order.Create_date, order.Symbol,
+            print(format_value % (i, order.Exchange, order.Order_id, order.Orders_id, order.Create_date, order.Symbol,
                                   order.Amount, order.Price, order.Avg_price, order.Deal_amount,
                                   order.Status, order.Type))
+            i = i + 1
         print('=' * total_with)
         print("        status: -1:已撤销  0:未成交  1:部分成交  2:完全成交 3:撤单处理中")
         print("          type: buy:买入  sell:卖出  buy_market:市价买入  sell_market:市价卖出")

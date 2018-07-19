@@ -3,6 +3,7 @@ import talang.exchanges.okex.util as okex_util
 import talang.util.util_data as ut
 from datetime import datetime
 from talang.util.model.Trade import Trade
+import talang.trader.trade.spot_trade_rule as spot_trade_rule
 # 现货API
 okexcoinSpot = okex_util.getOkcoinSpot()
 # 期货API
@@ -19,6 +20,7 @@ class SpotTrade:
             trade = Trade()
             ex_qt = SpotTrade()
             msg = ex_qt.post_trade(exchange, base_coin, quote_coin, tradeType, price, amount)
+            print(msg)
             trade.Result = msg['result']    #'result': True
             trade.Trade_id = msg['order_id']
             trade.price = price
@@ -36,8 +38,13 @@ class SpotTrade:
             msg = ''
             #    def trade(self, symbol, tradeType, price='', amount=''):
             if ut.okex_exchange.lower() == exchange.lower():
-                msg = okexcoinSpot.trade(symbol, tradeType, price, amount)
-                print(msg)
+                s_t_rule = spot_trade_rule.SpotTradeRule()
+                #判断价格是否正确
+                if s_t_rule.if_right_price(exchange, base_coin, quote_coin, tradeType, price):
+                    msg = okexcoinSpot.trade(symbol, tradeType, price, amount)
+                    print(msg)
+                else:
+                    msg = 'not right price'
                 # {"result":true,"order_id":123456}
             else:
                 print('no support exchange')

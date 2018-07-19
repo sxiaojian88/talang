@@ -8,10 +8,10 @@ def main():
 
     ex_qt = spot_trad_api.SpotTrade()
     exchange_name = 'okex'
-    base_coin = 'eos'
+    base_coin = 'xrp'
     quote_coin = 'usdt'
     tradeType = 'sell'
-    price = 110
+    price = 5
     amount = 1
 
     #买卖价格校验，买价不能比卖价高，卖价不能比买价低

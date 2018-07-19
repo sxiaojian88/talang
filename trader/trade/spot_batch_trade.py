@@ -3,12 +3,23 @@ import talang.exchanges.okex.util as okex_util
 import talang.util.util_data as ut
 from datetime import datetime
 from talang.util.model.Trade import Trade
+import talang.trader.trade.spot_trade_rule as spot_trade_rule
 # 现货API
 okexcoinSpot = okex_util.getOkcoinSpot()
 # 期货API
 okexcoinFuture = okex_util.getOkcoinFuture()
 
 class SpotBatchTrade:
+
+        def get_spot_batch_trade(self, exchange, base_coin, quote_coin, tradeType, prices, amounts, types):
+
+            ex_qt = SpotBatchTrade()
+            orders_data = ex_qt.get_orders_data(exchange, base_coin, quote_coin, prices, amounts, types)
+            print(orders_data)
+            tk = ex_qt.get_spot_batch_trade_result(exchange, base_coin, quote_coin, tradeType, orders_data)
+
+            return tk
+
 
         def get_spot_batch_trade_result(self, exchange, base_coin, quote_coin, tradeType, orders_data):
             '''
@@ -21,7 +32,7 @@ class SpotBatchTrade:
             trade.Result = msg['result']    #'result': True
 
             #trade.Trade_id = msg['order_id']
-            trade.Time = datetime.datetime.now()
+            trade.Time = datetime.now().strftime("%Y%m%d %H:%M:%S.%f")
 
             return trade
 
@@ -42,15 +53,20 @@ class SpotBatchTrade:
             return msg
 
         @classmethod
-        def get_orders_data(self, prices, amounts, types):
+        def get_orders_data(self, exchange, base_coin, quote_coin, prices, amounts, types):
             str_orders_data = ''
             len_i = min(len(prices), len(amounts), len(types))
-            len_i = min(ut.MAX_BATCH_NUM_OKEX, len_i)
+            #len_i = min(ut.MAX_BATCH_NUM_OKEX, len_i)
             if len_i == 0:
                 return str_orders_data
             str_orders_data = '['
+            get_data_num = 0
             for i in range(0, len_i):
-                str_orders_data += '{price:%f,amount:%f,type:\'%s\'}' % (prices[i], amounts[i], types[i])
+                #判断价格是否正确
+                s_t_rule = spot_trade_rule.SpotTradeRule()
+                if get_data_num < ut.MAX_BATCH_NUM_OKEX and s_t_rule.if_right_price(exchange, base_coin, quote_coin, types[i], prices[i]) :
+                    str_orders_data += '{price:%f,amount:%f,type:\'%s\'}' % (prices[i], amounts[i], types[i])
+                    get_data_num = get_data_num + 1
             str_orders_data += ']'
             return str_orders_data
 

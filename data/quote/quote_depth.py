@@ -11,28 +11,42 @@ okexcoinFuture = okex_util.getOkcoinFuture()
 
 class QuoteDepth():
 
-        def get_buy_1_value(self, exchange, base_coin, quote_coin, size=1):
+        def get_buy_1_value(self, exchange, base_coin, quote_coin, size=5):
             ex_qt = QuoteDepth()
             msg = ex_qt.get_msg(exchange, base_coin, quote_coin, size)
             bids = msg['bids']
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
-            print(bids)
+            #print(bids)
             buy_1_price = bids[0][0]
 
             return buy_1_price
 
-        def get_sell_1_value(self, exchange, base_coin, quote_coin, size=1):
+        def get_sell_1_value(self, exchange, base_coin, quote_coin, size=5):
             ex_qt = QuoteDepth()
             msg = ex_qt.get_msg(exchange, base_coin, quote_coin, size)
             asks = msg['asks']
             asks = sorted(asks, key=lambda x: x[0])
-            print(asks)
+            #print(asks)
             sell_1_price = asks[0][0]
 
             return sell_1_price
 
+        def get_bids(self, exchange, base_coin, quote_coin, size=5):
+            ex_qt = QuoteDepth()
+            msg = ex_qt.get_msg(exchange, base_coin, quote_coin, size)
+            bids = msg['bids']
+            bids = sorted(bids, key=lambda x: x[0], reverse=True)
+            return bids
+
+        def get_asks(self, exchange, base_coin, quote_coin, size=5):
+            ex_qt = QuoteDepth()
+            msg = ex_qt.get_msg(exchange, base_coin, quote_coin, size)
+            asks = msg['asks']
+            asks = sorted(asks, key=lambda x: x[0])
+            return asks
+
         @classmethod
-        def get_msg(cls, exchange, base_coin, quote_coin, size=1):
+        def get_msg(cls, exchange, base_coin, quote_coin, size=5):
             # 组合symbol值
             symbol = ut.get_symbol(exchange, base_coin, quote_coin)
             msg = ''

@@ -62,9 +62,10 @@ class AccountApi():
     def get_account_okex(self):
         
         res = okcoinSpot.userInfo()
+        print(res)
         info = res["info"]
         funds = info["funds"]
-        borrow = funds["borrow"]
+        #borrow = funds["borrow"]
         free = funds["free"]
         freezed = funds["freezed"]
         keys = list(free.keys())
@@ -75,11 +76,11 @@ class AccountApi():
         okex_account.exchange = ut.okex_exchange
 
         for i in range(0, len(keys)):
-            if float(free[keys[i]]) > 0 or float(freezed[keys[i]]) > 0 or float(borrow[keys[i]]) > 0:
+            if float(free[keys[i]]) > 0 or float(freezed[keys[i]]) > 0 :#or float(borrow[keys[i]]) > 0:
                 cur = keys[i]
                 fre = float(free[keys[i]])
                 frd = float(freezed[keys[i]])
-                bor = float(borrow[keys[i]])
+                bor = 0#float(borrow[keys[i]])
                 total_num = fre+frd+bor
                 btc_value = float(self.get_btc_value_by_symbol(ut.okex_exchange,cur))
                 usdt_value = float(self.get_usdt_value_by_symbol(ut.okex_exchange,cur))
