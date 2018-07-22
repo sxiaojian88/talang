@@ -11,6 +11,20 @@ okexcoinFuture = okex_util.getOkcoinFuture()
 
 class QuoteDepth():
 
+        def get_buy1_and_sell1(self, exchange, base_coin, quote_coin, size=5):
+            ex_qt = QuoteDepth()
+            msg = ex_qt.get_msg(exchange, base_coin, quote_coin, size)
+            bids = msg['bids']
+            bids = sorted(bids, key=lambda x: x[0], reverse=True)
+            #print(bids)
+            buy_1_price = bids[0][0]
+
+            asks = msg['asks']
+            asks = sorted(asks, key=lambda x: x[0])
+            #print(asks)
+            sell_1_price = asks[0][0]
+            return buy_1_price, sell_1_price
+
         def get_buy_1_value(self, exchange, base_coin, quote_coin, size=5):
             ex_qt = QuoteDepth()
             msg = ex_qt.get_msg(exchange, base_coin, quote_coin, size)
@@ -52,7 +66,7 @@ class QuoteDepth():
             msg = ''
             if ut.okex_exchange.lower() == exchange.lower():
                 msg = okexcoinSpot.depth(str.lower(symbol), size)
-                print(msg)
+                #print(msg)
             else:
                 print('no support exchange')
 

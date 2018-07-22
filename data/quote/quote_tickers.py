@@ -31,7 +31,7 @@ class QuoteTickers:
                 ticker.Low = float(msg_ticker['low'])
                 ticker.Sell = float(msg_ticker['sell'])
                 ticker.Volume = float(msg_ticker['vol'])
-                ticker.Symbol = msg_ticker['symbol'].upper()
+                ticker.Symbol = msg_ticker['symbol'].lower()
                 tickers.add_ticker(ticker)
             #tickers.cal_value()
             return tickers
