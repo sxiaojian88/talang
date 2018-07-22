@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import talang.trader.trade.spot_batch_trade as spot_batch_trad_api
+import talang.trader.trade.spot_trade_batch as spot_batch_trad_api
 from talang.util.model.Trade import Trade
 import collections
 
@@ -11,14 +11,14 @@ def main():
 
     ex_qt = spot_batch_trad_api.SpotBatchTrade()
     exchange_name = 'okex'
-    base_coin = 'eos'
+    base_coin = 'xrp'
     quote_coin = 'usdt'
     tradeType = 'sell'
 
     '''
     [{price:3,amount:5,type:'sell'},{price:3,amount:3,type:'buy'}]
     '''
-    prices = [3, 66, 4, 88, 99, 110, 220]
+    prices = [5, 6, 7, 8, 9, 10, 12]
     amounts = [1, 2, 3, 4, 5, 6, 7, 8]
     types =['sell', 'sell', 'sell', 'sell', 'sell', 'sell', 'sell', 'sell']
 
@@ -27,8 +27,8 @@ def main():
     #tk = ex_qt.get_spot_batch_trade_result(exchange_name, base_coin, quote_coin, tradeType, orders_data)
 
 
-    tk = ex_qt.get_spot_batch_trade(exchange_name, base_coin, quote_coin, tradeType, prices, amounts, types)
-    print('result:%s' % tk.Result + ',trade_id:%s' % tk.Trade_id)
+    tk = ex_qt.spot_batch_trade(exchange_name, base_coin, quote_coin, tradeType, prices, amounts, types)
+    print('result:%s' % tk.result + ',trade_id:%s' % tk.trade_id)
 
 if __name__ == "__main__":
     main()

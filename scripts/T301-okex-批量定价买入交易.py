@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import talang.trader.trade.spot_batch_trade as spot_batch_trad_api
+import talang.trader.trade.spot_trade_batch as spot_batch_trad_api
 from talang.util.model.Trade import Trade
 import collections
 
@@ -18,7 +18,7 @@ def main():
     '''
     [{price:3,amount:5,type:'sell'},{price:3,amount:3,type:'buy'}]
     '''
-    prices = [3, 66, 4, 88, 99, 110, 220]
+    prices = [3, 3.5, 4, 88, 99, 110, 220]
     amounts = [1, 2, 3, 4, 5, 6, 7, 8]
     types =['buy', 'buy', 'buy', 'buy', 'buy', 'buy', 'buy', 'buy']
 

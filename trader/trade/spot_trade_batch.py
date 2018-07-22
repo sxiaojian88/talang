@@ -11,7 +11,7 @@ okexcoinFuture = okex_util.getOkcoinFuture()
 
 class SpotBatchTrade:
 
-        def get_spot_batch_trade(self, exchange, base_coin, quote_coin, tradeType, prices, amounts, types):
+        def spot_batch_trade(self, exchange, base_coin, quote_coin, tradeType, prices, amounts, types):
 
             ex_qt = SpotBatchTrade()
             orders_data = ex_qt.get_orders_data(exchange, base_coin, quote_coin, prices, amounts, types)
