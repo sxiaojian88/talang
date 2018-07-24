@@ -29,25 +29,25 @@ class AccountApi():
     def get_all_symbols_btc_usdt_cny(self):
         return "ok"
     
-    def get_btc_value_by_symbol(self, exchange, symbol):
+    def get_btc_value_by_coin(self, exchange, coin):
         value_btc = 1.0
-        if symbol.lower() == ut.BTC_COIN.lower():
+        if coin.lower() == ut.BTC_COIN.lower():
             return value_btc
         #其他合法性判断，如symbol的值
-        if symbol.lower() == ut.USDT_COIN.lower():
-            value_usdt = ex_quote_api.ExchangeQuoteApi.get_buy_1_value(self, exchange, ut.BTC_COIN.upper(), symbol.upper())
+        if coin.lower() == ut.USDT_COIN.lower():
+            value_usdt = ex_quote_api.ExchangeQuoteApi.get_buy_1_value(self, exchange, ut.BTC_COIN.lower(), coin.lower())
             if value_usdt != 0:
                 value_btc = 1/float(value_usdt)
 
         else:
-            value_btc=ex_quote_api.ExchangeQuoteApi.get_buy_1_value(self, exchange, symbol.upper(), ut.BTC_COIN.upper())
+            value_btc=ex_quote_api.ExchangeQuoteApi.get_buy_1_value(self, exchange, coin.lower(), ut.BTC_COIN.lower())
 
         return value_btc
 
-    def get_usdt_value_by_symbol(self,exchange,symbol):
+    def get_usdt_value_by_coin(self, exchange, coin):
         value_usdt = 1.0
-        if symbol.lower() != ut.USDT_COIN.lower():
-            value_usdt = ex_quote_api.ExchangeQuoteApi.get_buy_1_value(self, exchange, symbol.upper(), ut.USDT_COIN.upper())
+        if coin.lower() != ut.USDT_COIN.lower():
+            value_usdt = ex_quote_api.ExchangeQuoteApi.get_buy_1_value(self, exchange, coin.lower(), ut.USDT_COIN.lower())
 
         return value_usdt
     
@@ -82,8 +82,8 @@ class AccountApi():
                 frd = float(freezed[keys[i]])
                 bor = 0#float(borrow[keys[i]])
                 total_num = fre+frd+bor
-                btc_value = float(self.get_btc_value_by_symbol(ut.okex_exchange,cur))
-                usdt_value = float(self.get_usdt_value_by_symbol(ut.okex_exchange,cur))
+                btc_value = float(self.get_btc_value_by_coin(ut.okex_exchange, cur))
+                usdt_value = float(self.get_usdt_value_by_coin(ut.okex_exchange, cur))
                 t_btc_value = total_num*btc_value
                 t_usdt_value = total_num*usdt_value
                 total_btc = total_btc+t_btc_value

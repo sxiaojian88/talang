@@ -14,16 +14,20 @@ class QuoteDepth():
         def get_buy1_and_sell1(self, exchange, base_coin, quote_coin, size=5):
             ex_qt = QuoteDepth()
             msg = ex_qt.get_msg(exchange, base_coin, quote_coin, size)
+            #print(msg)
             bids = msg['bids']
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
             #print(bids)
             buy_1_price = bids[0][0]
+            buy_1_volume = bids[0][1]
 
             asks = msg['asks']
             asks = sorted(asks, key=lambda x: x[0])
             #print(asks)
             sell_1_price = asks[0][0]
-            return buy_1_price, sell_1_price
+            sell_1_volume = asks[0][1]
+
+            return buy_1_price, sell_1_price, buy_1_volume, sell_1_volume
 
         def get_buy_1_value(self, exchange, base_coin, quote_coin, size=5):
             ex_qt = QuoteDepth()
