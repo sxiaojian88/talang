@@ -18,11 +18,16 @@ orders_total = Orders()
 
 
 def main():
+
+    #目前不够稳定
+    #===============输入参数=======================
+    # 无
+    # =============================================
+
     exchange_name = 'okex'
     ex_qs = symbol_api.QuoteSymbols()
     sybs = ex_qs.get_all_symbols(exchange_name)
     #sybs.print_detail()
-
     concurrency = 2   #并发数量
     print('begin:%s' % datetime.now().strftime("%Y%m%d %H:%M:%S.%f"))
 

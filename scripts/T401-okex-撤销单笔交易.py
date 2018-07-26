@@ -5,11 +5,14 @@ import talang.trader.trade.spot_trade_cancel as spot_trad_cancel_api
 
 def main():
 
-    ex_qt = spot_trad_cancel_api.SpotTradeCancel()
-    exchange_name = 'okex'
+    #===============输入 参数=============================
     base_coin = 'eos'
     quote_coin = 'usdt'
     order_id = '637839142'
+    #=====================================================
+
+    ex_qt = spot_trad_cancel_api.SpotTradeCancel()
+    exchange_name = 'okex'
     symbol = ut.get_symbol(exchange_name, base_coin, quote_coin)
     tk = ex_qt.get_spot_trade_cancel_result(exchange_name, symbol, order_id)
     print('result:%s' %tk.Result + 'trade_id:%s' %tk.Trade_id)

@@ -5,8 +5,9 @@ import talang.manage.account.account_api as act_api
 
 def main():
 
-    #act = act_zmq.account_zmq()
-
+    #===============输入参数=======================
+    # 无
+    # =============================================
     #以Tiker行情数据计算okex资产
     act = act_api.AccountApi()
     okex_account = act.get_account_okex()

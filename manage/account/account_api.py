@@ -62,7 +62,7 @@ class AccountApi():
     def get_account_okex(self):
         
         res = okcoinSpot.userInfo()
-        print(res)
+        #print(res)
         info = res["info"]
         funds = info["funds"]
         #borrow = funds["borrow"]

@@ -5,6 +5,10 @@ import talang.data.quote.quote_tickers as tickers_api
 
 def main():
 
+    #===============输入参数=======================
+    # 无
+    # =============================================
+
     ex_qt = tickers_api.QuoteTickers()
     exchange_name = 'okex'
     tks = ex_qt.get_tikers_value(exchange_name)

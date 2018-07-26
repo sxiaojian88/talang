@@ -8,8 +8,8 @@ from talang.exchanges.okex.okcoinSpotAPI import OKCoinSpot
 import talang_config.config_data as talang_config
 
 # 初始化ACCESS_KEY, SECRET_KEY, SERVICE_API
-ACCESS_KEY = talang_config.OX["USD_1"]["ACCESS_KEY"]
-SECRET_KEY = talang_config.OX["USD_1"]["SECRET_KEY"]
+ACCESS_KEY = talang_config.OX_TR1["USD_1"]["ACCESS_KEY"]
+SECRET_KEY = talang_config.OX_TR1["USD_1"]["SECRET_KEY"]
 SERVICE_API = "https://www.okex.com"#talang_config.OKEX["USD_1"]["SERVICE_API"]
 
 

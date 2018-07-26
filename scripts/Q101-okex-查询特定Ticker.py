@@ -6,10 +6,13 @@ from talang.util.model.Ticker import Ticker
 
 def main():
 
-    ex_qt = tiker_api.QuoteTicker()
-    exchange_name = 'okex'
+    #===============输入参数=======================
     base_coin = 'eos'
     quote_coin = 'usdt'
+    # =============================================
+
+    ex_qt = tiker_api.QuoteTicker()
+    exchange_name = 'okex'
     #tk = Ticker()
     tk = ex_qt.get_tiker_value(exchange_name, base_coin, quote_coin)
     tk.print_detail()

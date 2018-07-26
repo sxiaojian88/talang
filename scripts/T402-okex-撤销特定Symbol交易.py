@@ -6,11 +6,14 @@ import talang.util.util_data as ut
 
 def main():
 
+    #===============输入 参数=============================
+    base_coin = 'eos'
+    quote_coin = 'usdt'
+    #=====================================================
+
     #查询特定Symbol所有orders，参考Q202
     ex_qt = spot_order_q.spot_order_query()
     exchange_name = 'okex'
-    base_coin = 'xrp'
-    quote_coin = 'usdt'
     order_id = -1#"480894458"
     orders = ex_qt.get_orders_value(exchange_name, base_coin, quote_coin,order_id)
     orders.print_detail()

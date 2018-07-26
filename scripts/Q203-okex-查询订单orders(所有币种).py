@@ -8,13 +8,15 @@ from datetime import datetime
 
 
 def main():
+    #===============输入参数=======================
+    # 无
+    # =============================================
+
     exchange_name = 'okex'
     ex_qs = symbol_api.QuoteSymbols()
     sybs = ex_qs.get_all_symbols(exchange_name)
-
     ex_qt = spot_order_q.spot_order_query()
     order_id = -1
-
     orders_total = Orders()
 
     print('begin:%s' % datetime.now().strftime("%Y%m%d %H:%M:%S.%f"))

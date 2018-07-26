@@ -9,17 +9,17 @@ trade_one = collections.namedtuple('trade_one', 'price amount type')
 
 def main():
 
-    ex_qt = spot_batch_trad_api.SpotBatchTrade()
-    exchange_name = 'okex'
+    #T302-okex-批量-定价-卖出-交易(特定币种)，每次只能发送5笔
+    #============输入参数==============================
     base_coin = 'xrp'
     quote_coin = 'usdt'
-    tradeType = 'sell'
+    prices = [5, 6, 7, 8, 9]
+    amounts = [1, 2, 3, 4, 5]
+    # ================================================
 
-    '''
-    [{price:3,amount:5,type:'sell'},{price:3,amount:3,type:'buy'}]
-    '''
-    prices = [5, 6, 7, 8, 9, 10, 12]
-    amounts = [1, 2, 3, 4, 5, 6, 7, 8]
+    ex_qt = spot_batch_trad_api.SpotBatchTrade()
+    exchange_name = 'okex'
+    tradeType = 'sell'
     types =['sell', 'sell', 'sell', 'sell', 'sell', 'sell', 'sell', 'sell']
 
     #orders_data = ex_qt.get_orders_data(exchange_name, base_coin, quote_coin, prices, amounts, types)

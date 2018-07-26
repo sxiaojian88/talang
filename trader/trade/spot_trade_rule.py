@@ -18,12 +18,16 @@ class SpotTradeRule:
             tradeType='buy' price需比depth中sell1要小，大则返回False
             tradeType='sell' price需对比depth中buy1要大，小则返回False
             '''
+            #市价交易不校验价格
+            if str.lower(tradeType) == 'buy_market' or str.lower(tradeType) == 'sell_market':
+                return True
+
             qt_d = qt_depth.QuoteDepth()
-            if str.lower(tradeType) == 'buy' or str.lower(tradeType) == 'buy_market':
+            if str.lower(tradeType) == 'buy':
                 sell1 = qt_d.get_sell_1_value(exchange, base_coin, quote_coin, 5)
                 if price < sell1:
                     return True
-            elif str.lower(tradeType) == 'sell' or str.lower(tradeType) == 'sell_market':
+            elif str.lower(tradeType) == 'sell':
                 buy1 = qt_d.get_buy_1_value(exchange, base_coin, quote_coin, 5)
                 if price > buy1:
                     return True

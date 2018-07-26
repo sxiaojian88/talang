@@ -5,6 +5,11 @@ from talang.util.model.Symbol import Symbols
 
 
 def main():
+
+    #===============输入参数=======================
+    # 无
+    # =============================================
+
     ex_qt = symbol_api.QuoteSymbols()
     exchange_name = 'okex'
     sybs = ex_qt.get_all_symbols(exchange_name)
