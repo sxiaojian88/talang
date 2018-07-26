@@ -69,6 +69,26 @@ class QuoteSymbols:
 
         return same_basecoin
 
+    #只要跟coins有相关的，不论是base_coin,还是quote_coin都把此symbol返回
+    def get_symbols_by_coins(self, exchange, coins):
+        sybs_a = Symbols()
+        if ut.okex_exchange.lower() == exchange.lower():
+            ex_qt = tickers_api.QuoteTickers()
+            tks = ex_qt.get_tikers_value(exchange)
+            for ticker in tks.Tickers_list:
+                syb = Symbol()
+                syb.symbol = ticker.Symbol
+                syb.exchange = exchange
+                syb.time = ticker.Time
+                syb.base_coin = ut.get_base_coin(exchange, ticker.Symbol)
+                syb.quote_coin = ut.get_quote_coin(exchange, ticker.Symbol)
+                for coin in coins:
+                    if str.lower(coin) == syb.quote_coin.lower() or str.lower(coin) == syb.base_coin.lower():
+                        sybs_a.add_symbol(syb)
+                        break       #已添加就退出coin循环，避免重复添加。比如xrp_usdt，coins中如果有xrp,usdt时，不break的话就会添加两次。
+        return sybs_a
+
+
 if __name__ == '__main__':
     ex_qt = QuoteSymbols()
     exchange_name = 'okex'

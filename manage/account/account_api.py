@@ -118,6 +118,24 @@ class AccountApi():
     
         return "ok"
 
+    #返回冻结的coin币别
+    def get_okex_freezed_coins(self):
+        coins = []
+        res = okcoinSpot.userInfo()
+        # print(res)
+        info = res["info"]
+        funds = info["funds"]
+        freezed = funds["freezed"]
+        keys = list(freezed.keys())
+        okex_account = acct.SpotAccount()
+        okex_account.exchange = ut.okex_exchange
+
+        for i in range(0, len(keys)):
+            if  float(freezed[keys[i]]) > 0:
+                coins.append(keys[i])
+
+        return coins
+
 
 if __name__ == "__main__":
     act = AccountApi()

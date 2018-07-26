@@ -5,7 +5,7 @@ from talang.util.model.Order import Orders
 import talang.trader.query.spot_order_query as spot_order_q
 import time
 from datetime import datetime
-
+import talang.manage.account.account_api as act_api
 
 import collections
 import concurrent.futures
@@ -26,7 +26,14 @@ def main():
 
     exchange_name = 'okex'
     ex_qs = symbol_api.QuoteSymbols()
-    sybs = ex_qs.get_all_symbols(exchange_name)
+    #----------------old查询所有symb------------------
+    #sybs = ex_qs.get_all_symbols(exchange_name)
+    #----------------------------------------------
+    #查询账号中冻结的coins，再根据冻结的coins查询相关symbols
+    act = act_api.AccountApi()
+    coins = act.get_okex_freezed_coins()
+    sybs = ex_qs.get_symbols_by_coins(exchange_name, coins)
+
     #sybs.print_detail()
     concurrency = 2   #并发数量
     print('begin:%s' % datetime.now().strftime("%Y%m%d %H:%M:%S.%f"))
