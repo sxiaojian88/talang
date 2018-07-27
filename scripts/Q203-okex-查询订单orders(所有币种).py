@@ -23,7 +23,7 @@ def main():
     coins = act.get_okex_freezed_coins()
     sybs = ex_qs.get_symbols_by_coins(exchange_name, coins)
 
-    print(len(sybs.symbols_list))
+    print('预计用时：%-6.2f秒' % float(len(sybs.symbols_list)/8))
 
     ex_qt = spot_order_q.spot_order_query()
     order_id = -1

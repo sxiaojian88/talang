@@ -1,4 +1,6 @@
 from datetime import datetime
+import talang.util.util_data as ut
+
 '''
 市场行情 由GetTicker函数返回
 {
@@ -23,13 +25,14 @@ class Ticker:
         :param instmt: Instrument name
         :param default_format: Default date time format
         """
+        self.Exchange = ut.okex_exchange
         self.Symbol = ''
         self.Time = datetime(2000, 1, 1, 0, 0, 0).strftime("%Y%m%d %H:%M:%S.%f")
         self.Ticker_id = '0'
         self.High = 0.0
         self.Low = 0.0
         self.Sell = 0.0
-        self.Buy = 0.0
+        self.Buy = 0.
         self.Last = 0.0
         self.Volume = 0.0
         self.Volume_to_value = 0.0  # Volume_to_value = Last * Volume
@@ -57,8 +60,8 @@ class Ticker:
                [self.High] + [self.Low] + [self.Sell] + [self.Buy] + [self.Last] + [self.Volume] + \
                [self.Volume_to_value]
 
-    def cal_value(self):
-        self.Volume_to_value = self.Volume * self.Last
+    def cal_value(self, usdt_value=1):
+        self.Volume_to_value = self.Volume * self.Last * usdt_value
 
     def print_detail(self):
         total_with = 10*15
@@ -67,7 +70,7 @@ class Ticker:
         format_tile = "%-10s%20s" \
                       "%15s%15s%15s%15s%15s%20s%20s"
         print(format_tile % ("Symbol", "Time",
-                             "High", "Low", "Sell", "Buy", "Last", "Volume", "Value"))
+                             "High", "Low", "Sell", "Buy", "Last", "Volume", "Value(ustd)"))
         print('-' * total_with)
         format_value = "%-10s%20s" \
                        "%15.8f%15.8f%15.8f%15.8f%15.8f%20.4f%20.4f"
@@ -88,10 +91,6 @@ class Tickers:
     def sort_tickers_by_symbol(self):
         self.Tickers_list.sort(key=lambda x: x.Symbol, reverse=True)
 
-    def cal_value(self):
-        for ticker in self.Tickers_list:
-            ticker.Volume_to_value = ticker.Volume * ticker.Last
-
     def sort_tickers_by_value(self):
         self.Tickers_list.sort(key=lambda x: x.Volume_to_value, reverse=True)
 
@@ -104,7 +103,7 @@ class Tickers:
         format_tile = "%-5s%-10s%20s" \
                       "%15s%15s%15s%15s%15s%20s%20s"
         print(format_tile % ("No.", "Symbol", "Time",
-                             "High", "Low", "Sell", "Buy", "Last", "Volume", "Value"))
+                             "High", "Low", "Sell", "Buy", "Last", "Volume", "Value(usdt)"))
         print('-' * total_with)
         format_value = "%-5d%-10s%20s" \
                        "%15.8f%15.8f%15.8f%15.8f%15.8f%20.4f%20.4f"

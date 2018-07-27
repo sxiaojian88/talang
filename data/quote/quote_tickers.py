@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import talang.exchanges.okex.util as okex_util
 import talang.util.util_data as ut
+import talang.data.quote.quote_ticker as quote_ticker
 from talang.util.model.Ticker import Ticker
 from talang.util.model.Ticker import Tickers
 from datetime import datetime
@@ -15,12 +16,15 @@ class QuoteTickers:
 
         def get_tikers_value(self, exchange):
             tickers = Tickers()
-            ex_qt = QuoteTickers()
-            msg = ex_qt.get_msg(exchange)
+            q_tickers = QuoteTickers()
+            q_ticker = quote_ticker.QuoteTicker()
+            msg = q_tickers.get_msg(exchange)
             timestamp = float(msg["date"])
             time_ticker = datetime.fromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S")
 
             msg_tickers = msg["tickers"]
+            last_quote_coin = ''
+            quote_coin_USDT_price = 1
             for i in range(len(msg_tickers)):
                 ticker = Ticker()
                 msg_ticker = msg_tickers[i]
@@ -32,6 +36,13 @@ class QuoteTickers:
                 ticker.Sell = float(msg_ticker['sell'])
                 ticker.Volume = float(msg_ticker['vol'])
                 ticker.Symbol = msg_ticker['symbol'].lower()
+                #如果quote_coin跟上一次一样，就不用重复提取其usdt值
+                this_quote_coin = ut.get_quote_coin(exchange, ticker.Symbol)
+                if str.lower(this_quote_coin) != str.lower(last_quote_coin):
+                    quote_coin_USDT_price = q_ticker.get_usdt_value_by_coin(exchange, this_quote_coin)
+                last_quote_coin = this_quote_coin
+                #
+                ticker.Volume_to_value = ticker.Volume * ticker.Last * quote_coin_USDT_price
                 tickers.add_ticker(ticker)
             #tickers.cal_value()
             return tickers

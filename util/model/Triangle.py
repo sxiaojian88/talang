@@ -1,6 +1,6 @@
 from talang.util.model.ModelBase import ModelBase
 import talang.util.util_data as ut
-import talang.manage.account.account_api as act_api
+import talang.data.quote.quote_ticker as quote_ticker
 
 class Triangle(ModelBase):
 
@@ -39,6 +39,13 @@ class Triangle(ModelBase):
         self.symbol = ut.get_symbol(self.exchange, self.base_coin, self.quote_coin)
         return self.symbol
 
+    def print_direecton(self, i):
+        format_value = "%-5d%-10s%20s" \
+                       "%15s%15s%15s" \
+                       "%15.4f%15.4f"
+        print(format_value % (i, self.exchange, self.time,
+                              self.base_coin, self.quote_coin, self.middle_coin,
+                              self.right_direction, self.left_direction))
 
 class Triangles:
     def __init__(self):
@@ -63,25 +70,25 @@ class Triangles:
         self.triangle_list.sort(key=lambda x: x.left_direction, reverse=False)
 
     def print_detail_right_direction(self):
-        act = act_api.AccountApi()
+        q_ticker = quote_ticker.QuoteTicker()
         #tri.right_direction = tri.BC_MC_buy_1_price / (tri.QC_MC_sell_1_price * tri.BC_QC_sell_1_price) - 1
         self.triangle_list.sort(key=lambda x: x.right_direction, reverse=False)
 
-        total_with = 5 + 8 + 16 + 4*10 + 3*12 + 3*16
+        total_with = 5 + 8 + 16 + 3*10 + 2*12 + 3*12 + 3*16
         print('=' * total_with)
         format_tile = "%-5s%-8s%16s" \
-                      "%10s%10s%10s%10s" \
+                      "%10s%10s%10s%12s%12s" \
                       "%12s%12s%12s" \
                       "%16s%16s%16s"
 
         print(format_tile % ("No.", "Exch", "Time",
-                             "BC_MC", "QC_MC", "BC_QC", "Right_direct",
+                             "BC_MC", "QC_MC", "BC_QC", "Right_direct", "Left_direct",
                              "BC_MC_buy1", "QC_MC_sell1", "BC_QC_sell1",
                              "BC_MC_buy1_val", "QC_MC_sell1_val", "BC_QC_sell1_val"
                              ))
         print('-' * total_with)
         format_value = "%-5d%-8s%16s" \
-                       "%10s%10s%10s%10.4f" \
+                       "%10s%10s%10s%10.4f%10.4f" \
                        "%12.6f%12.6f%12.6f" \
                        "%16.4f%16.4f%16.4f"
         i = 1
@@ -93,11 +100,11 @@ class Triangles:
             this_MC = tri.middle_coin
             this_QC = tri.quote_coin
             if str.lower(this_MC) != str.lower(last_MC):
-                this_MC_USDT_price = act.get_usdt_value_by_coin(tri.exchange, this_MC)
+                this_MC_USDT_price = q_ticker.get_usdt_value_by_coin(tri.exchange, this_MC)
             if str.lower(this_QC) != str.lower(last_QC):
-                this_QC_USDT_price = act.get_usdt_value_by_coin(tri.exchange, this_QC)
+                this_QC_USDT_price = q_ticker.get_usdt_value_by_coin(tri.exchange, this_QC)
             print(format_value % (i, tri.exchange, tri.time,
-                                  tri.get_BC_MC(), tri.get_QC_MC(), tri.get_BC_QC(), tri.right_direction,
+                                  tri.get_BC_MC(), tri.get_QC_MC(), tri.get_BC_QC(), tri.right_direction, tri.left_direction,
                                   tri.BC_MC_buy_1_price, tri.QC_MC_sell_1_price, tri.BC_QC_sell_1_price,
                                   this_MC_USDT_price * tri.BC_MC_buy_1_price * tri.BC_MC_buy_1_volume,
                                   this_MC_USDT_price * tri.QC_MC_sell_1_price * tri.QC_MC_sell_1_volume,
