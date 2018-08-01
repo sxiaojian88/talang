@@ -10,7 +10,7 @@ class Logger:
         """
         Initialise the logger
         """
-        Logger.logger = logging.getLogger('BitcoinExchangeFH')
+        Logger.logger = logging.getLogger('Talang')
         Logger.logger.setLevel(logging.ERROR)
         Logger.logger.setLevel(logging.INFO)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s \n%(message)s\n')

@@ -14,7 +14,7 @@ okexcoinFuture = okex_util.getOkcoinFuture()
 
 class QuoteTickers:
 
-        def get_tikers_value(self, exchange):
+        def get_tikers_value(self, exchange, usdt_value_limit=0):#usdt_value_limit成交量最低门槛
             tickers = Tickers()
             q_tickers = QuoteTickers()
             q_ticker = quote_ticker.QuoteTicker()
@@ -43,7 +43,8 @@ class QuoteTickers:
                 last_quote_coin = this_quote_coin
                 #
                 ticker.Volume_to_value = ticker.Volume * ticker.Last * quote_coin_USDT_price
-                tickers.add_ticker(ticker)
+                if ticker.Volume_to_value >= usdt_value_limit:
+                    tickers.add_ticker(ticker)
             #tickers.cal_value()
             return tickers
 

@@ -4,15 +4,16 @@ import talang.data.quote.quote_depth as depth_api
 import talang.data.quote.quote_symbols as symbol_api
 from talang.util.model.Triangle import Triangle
 from talang.util.model.Triangle import Triangles
+import talang.util.util_data as ut
 from datetime import datetime
-
 
 def main():
 
     #S101-okex-三角套利机会监测
     #===============输入参数=======================
-    threshold_value = 0.001 #阈值
-    go_times_set = 1          #跑多少次循环
+    threshold_value = 0.01     #阈值
+    go_times_set = 10000          #跑多少次循环
+    usdt_value_limit = 10000       #进入观察列表的symbol的最低成交额
     # =============================================
 
     print('begin:%s' % datetime.now().strftime("%Y%m%d %H:%M:%S.%f"))
@@ -22,13 +23,15 @@ def main():
     exchange_name = 'okex'
     #base_coin = 'eos'
 
-    total_with = 6 * 15 + 5 + 18 * 2
+    total_with = 6 * 15 + 5 + 18 * 2 + 15*3
     print('=' * total_with)
     format_tile = "%-5s%-10s%20s" \
                   "%15s%15s%15s" \
+                  "%15s%15s%15s" \
                   "%18s%18s"
     print(format_tile % ("No.", "Exchange", "Time",
-                         "Base_Coin", "Quote_Coin", "Middle_Coin",
+                         "BC_MC", "BC_QC", "QC_MC",
+                         "BC_MC_value", "BC_QC_value", "QC_MC_value",
                          "Right_direction", "Left_direction"))
 
 
@@ -36,24 +39,25 @@ def main():
     1:eth,btc,2:btc,usdt,3.eth,usdt,
     4.okb,eth,5,okb,btc,6.okb,usdt
     '''
-    coin_pairs = [['eth', 'btc'], ['btc', 'usdt'], ['eth', 'usdt'],
-                  ['okb', 'btc'], ['okb', 'eth'], ['okb', 'usdt']]
+    quote_middle_coin_pairs = [['eth', 'btc'], ['btc', 'usdt'], ['eth', 'usdt'],
+                                ['okb', 'btc'], ['okb', 'eth'], ['okb', 'usdt']]
     tris = Triangles()
 
     go_times = 0
+    get_items = 1
     while True:
         go_times += 1
         if go_times > go_times_set:
             break
-        for pairs in coin_pairs:
+        for pairs in quote_middle_coin_pairs:
             quote_coin = pairs[0]#'btc'
             middle_coin = pairs[1]#'usdt'
 
-            samebasecoin = symbol_qt.get_samebasecoin_of_diff_quote_coin(exchange_name, quote_coin, middle_coin)
+            samebasecoin = symbol_qt.get_samebasecoin_of_diff_quote_coin(exchange_name, quote_coin, middle_coin, usdt_value_limit)
             #print(samebasecoin)
             #print(len(samebasecoin))
 
-            i = 1
+
             for base_coin in samebasecoin:
                 tri = Triangle()
                 tri.exchange = exchange_name
@@ -83,11 +87,14 @@ def main():
                 else:
                     print('QC_MC_buy_1_price*BC_QC_buy_1_price:0')
 
-                if tri.right_direction > threshold_value or tri.left_direction > threshold_value:
+                if tri.right_direction > threshold_value:
                     tris.add_triangle(tri)
-                    tri.print_direecton(i)
-                    i = i + 1
-
+                    tri.print_direecton(get_items, ut.RIGHT_DIRECT)
+                    get_items += 1
+                elif tri.left_direction > threshold_value:
+                    tris.add_triangle(tri)
+                    tri.print_direecton(get_items, ut.LEFT_DIRECT)
+                    get_items += 1
     tris.print_detail_right_direction()
 
     print('end:%s' % datetime.now().strftime("%Y%m%d %H:%M:%S.%f"))

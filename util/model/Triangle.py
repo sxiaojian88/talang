@@ -39,13 +39,35 @@ class Triangle(ModelBase):
         self.symbol = ut.get_symbol(self.exchange, self.base_coin, self.quote_coin)
         return self.symbol
 
-    def print_direecton(self, i):
+    def print_direecton(self, i , direct = ut.RIGHT_DIRECT):
+        q_ticker = quote_ticker.QuoteTicker()
         format_value = "%-5d%-10s%20s" \
                        "%15s%15s%15s" \
-                       "%15.4f%15.4f"
-        print(format_value % (i, self.exchange, self.time,
-                              self.base_coin, self.quote_coin, self.middle_coin,
-                              self.right_direction, self.left_direction))
+                        "%15.4f%15.4f%15.4f" \
+                        "%15.4f%15.4f"
+        this_MC_USDT_price = q_ticker.get_usdt_value_by_coin(self.exchange, self.middle_coin)
+        this_QC_USDT_price = q_ticker.get_usdt_value_by_coin(self.exchange, self.quote_coin)
+
+        if str.lower(direct) == ut.RIGHT_DIRECT.lower():
+            print(format_value % (i, self.exchange, self.time,
+                              ut.get_symbol(ut.okex_exchange, self.base_coin, self.middle_coin),
+                              ut.get_symbol(ut.okex_exchange, self.base_coin, self.quote_coin),
+                              ut.get_symbol(ut.okex_exchange, self.quote_coin, self.middle_coin),
+                              this_MC_USDT_price * self.BC_MC_buy_1_price * self.BC_MC_buy_1_volume,
+                              this_QC_USDT_price * self.BC_QC_sell_1_price * self.BC_QC_sell_1_volume,
+                              this_MC_USDT_price * self.QC_MC_sell_1_price * self.QC_MC_sell_1_volume,
+                              self.right_direction, self.left_direction
+                              ))
+        else:
+            print(format_value % (i, self.exchange, self.time,
+                              ut.get_symbol(ut.okex_exchange, self.base_coin, self.middle_coin),
+                              ut.get_symbol(ut.okex_exchange, self.base_coin, self.quote_coin),
+                              ut.get_symbol(ut.okex_exchange, self.quote_coin, self.middle_coin),
+                              this_MC_USDT_price * self.BC_MC_sell_1_price * self.BC_MC_sell_1_volume,
+                              this_QC_USDT_price * self.BC_QC_buy_1_price * self.BC_QC_buy_1_volume,
+                              this_MC_USDT_price * self.QC_MC_buy_1_price * self.QC_MC_buy_1_volume,
+                              self.right_direction, self.left_direction
+                              ))
 
 class Triangles:
     def __init__(self):

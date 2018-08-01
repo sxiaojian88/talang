@@ -2,6 +2,7 @@
 import talang.exchanges.okex.util as okex_util
 import talang.util.util_data as ut
 import time
+from talang.util.Logger import Logger
 # 现货API
 okexcoinSpot = okex_util.getOkcoinSpot()
 
@@ -75,18 +76,23 @@ class QuoteDepth():
         if ut.okex_exchange.lower() == exchange.lower():
             i = 1
             while True:
-                msg = okexcoinSpot.depth(str.lower(symbol), size)
-                keys = list(msg.keys())
-                if cls.get_bids_field_name() in keys and \
-                        cls.get_asks_field_name() in keys:
-                    return msg
-                else:
+                try:
+                    msg = okexcoinSpot.depth(str.lower(symbol), size)
+                    keys = list(msg.keys())
+                    if cls.get_bids_field_name() in keys and \
+                            cls.get_asks_field_name() in keys:
+                        return msg
+                    else:
+                        i = i + 1
+                        time.sleep(1)
+                except Exception as e:
+                    Logger.error(cls.__class__.__name__, "Error in get_msg: %s" % e)
                     i = i + 1
-                    if i > 10:
-                        return None
                     time.sleep(1)
+                if i > ut.RE_TRY_TIMES:
+                    return None
         else:
-            print('no support exchange')
+            Logger.error(cls.__class__.__name__, 'no support exchange')
 
         return msg
 

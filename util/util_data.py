@@ -15,8 +15,14 @@ okex_exchange = "OkEx"
 
 #美元汇率
 USDT_CNY=6.45
-
+#okex交易每次最大可送的值（okex限制）
 MAX_BATCH_NUM_OKEX = 5
+
+#rest API请求失败时，重试次数
+RE_TRY_TIMES = 10
+#方向
+RIGHT_DIRECT = 'right'
+LEFT_DIRECT = 'left'
 
 def get_symbol(exchange, base_coin, quote_coin):
     # 组合symbol值

@@ -7,8 +7,8 @@ from talang.util.model.Ticker import Ticker
 def main():
 
     #===============输入参数=======================
-    base_coin = 'qtum'
-    quote_coin = 'eth'
+    base_coin = 'you'
+    quote_coin = 'okb'
     # =============================================
 
     ex_qt = tiker_api.QuoteTicker()

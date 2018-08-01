@@ -6,11 +6,11 @@ import talang.util.util_data as ut
 
 class QuoteSymbols:
 
-    def get_all_symbols(self, exchange):
+    def get_all_symbols(self, exchange, usdt_value_limit=0):
         sybs = Symbols()
         if ut.okex_exchange.lower() == exchange.lower():
             ex_qt = tickers_api.QuoteTickers()
-            tks = ex_qt.get_tikers_value(exchange)
+            tks = ex_qt.get_tikers_value(exchange, usdt_value_limit)
             for ticker in tks.Tickers_list:
                 syb = Symbol()
                 syb.symbol = ticker.Symbol
@@ -24,11 +24,11 @@ class QuoteSymbols:
 
         return sybs
 
-    def get_basecoinsymbols_by_quote_coin(self, exchange, quote_coin):
+    def get_basecoinsymbols_by_quote_coin(self, exchange, quote_coin, usdt_value_limit=0):
         sybs= Symbols()
         if ut.okex_exchange.lower() == exchange.lower():
             ex_qt = tickers_api.QuoteTickers()
-            tks = ex_qt.get_tikers_value(exchange)
+            tks = ex_qt.get_tikers_value(exchange, usdt_value_limit)
             for ticker in tks.Tickers_list:
                 syb = Symbol()
                 syb.symbol = ticker.Symbol
@@ -40,13 +40,13 @@ class QuoteSymbols:
                     sybs.add_symbol(syb)
         return sybs
 
-    def get_samebasecoin_of_diff_quote_coin(self, exchange, quote_coin_a, quote_coin_b):
+    def get_samebasecoin_of_diff_quote_coin(self, exchange, quote_coin_a, quote_coin_b, usdt_value_limit=0):
         same_basecoin = []
         sybs_a = Symbols()
         sybs_b = Symbols()
         if ut.okex_exchange.lower() == exchange.lower():
             ex_qt = tickers_api.QuoteTickers()
-            tks = ex_qt.get_tikers_value(exchange)
+            tks = ex_qt.get_tikers_value(exchange, usdt_value_limit)
             for ticker in tks.Tickers_list:
                 syb = Symbol()
                 syb.symbol = ticker.Symbol
@@ -70,11 +70,11 @@ class QuoteSymbols:
         return same_basecoin
 
     #只要跟coins有相关的，不论是base_coin,还是quote_coin都把此symbol返回
-    def get_symbols_by_coins(self, exchange, coins):
+    def get_symbols_by_coins(self, exchange, coins, usdt_value_limit=0):
         sybs_a = Symbols()
         if ut.okex_exchange.lower() == exchange.lower():
             ex_qt = tickers_api.QuoteTickers()
-            tks = ex_qt.get_tikers_value(exchange)
+            tks = ex_qt.get_tikers_value(exchange, usdt_value_limit)
             for ticker in tks.Tickers_list:
                 syb = Symbol()
                 syb.symbol = ticker.Symbol
