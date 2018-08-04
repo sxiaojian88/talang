@@ -12,6 +12,14 @@ class OKCoinSpot:
         self.__apikey = apikey
         self.__secretkey = secretkey
 
+    # 获取OKCOIN现货kline行情信息
+    def kline(self, symbol='', type='5min',size='1000'):
+        TICKER_RESOURCE = "/api/v1/kline.do"
+        params = ''
+        if symbol:
+            params = 'symbol=%(symbol)s&type=%(type)s&size=%(size)s' % {'symbol': symbol, 'type': type, 'size':size}
+        return httpGet(self.__url, TICKER_RESOURCE, params)
+
     # 获取OKCOIN现货行情信息
     def ticker(self, symbol=''):
         TICKER_RESOURCE = "/api/v1/ticker.do"

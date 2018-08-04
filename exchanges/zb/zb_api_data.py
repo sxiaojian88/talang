@@ -1,4 +1,4 @@
-from request_call import request_call
+from talang.exchanges.zb.request_call import request_call
 #
 #行情类
 #
@@ -29,8 +29,9 @@ class zb_api_data(request_call):
         url=self.host+'/data/v1/trades'
         return request_call.zb_call(url,self.dict())
     #K线
-    def kline(self):
+    def kline(self,type='5min',size=1000):
         url=self.host+"/data/v1/kline"
-        return request_call.zb_call(url,self.dict())
+        dict_in = {'market': self.currency, 'type':type, 'size':size}
+        return request_call.zb_call(url,dict_in)
 
 

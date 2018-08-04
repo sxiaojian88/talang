@@ -1,5 +1,5 @@
 import gevent
-from request_call import request_call
+from talang.exchanges.zb.request_call import request_call
 
 import talang_config.config_data as talang_config
 

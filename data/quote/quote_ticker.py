@@ -3,7 +3,7 @@ import talang.exchanges.okex.util as okex_util
 import talang.util.util_data as ut
 from talang.util.model.Ticker import Ticker
 from datetime import datetime
-
+import talang.exchanges.zb.zb_api_data as zb_data
 # 现货API
 okexcoinSpot = okex_util.getOkcoinSpot()
 # 期货API
@@ -59,9 +59,15 @@ class QuoteTicker:
         ticker = Ticker()
         ex_qt = QuoteTicker()
         msg = ex_qt.get_msg(exchange, base_coin, quote_coin)
+
         # Date time
         timestamp = float(msg["date"])
-        ticker.Time = datetime.fromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S")
+
+        if ut.okex_exchange.lower() == exchange.lower():
+            ticker.Time = datetime.fromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S")
+        elif ut.zb_exchange.lower() == exchange.lower():
+            ticker.Time = datetime.fromtimestamp(timestamp/1000).strftime("%Y%m%d %H:%M:%S")
+
         msg = msg["ticker"]
         ticker.Buy = float(msg['buy'])
         ticker.High = float(msg['high'])
@@ -84,6 +90,8 @@ class QuoteTicker:
             msg = okexcoinSpot.ticker(symbol)
             #print(msg)
             #{'date': '1529836574', 'ticker': {'high': '6256.6379', 'vol': '28947.4171', 'last': '5861.3241', 'low': '5782.2121', 'buy': '5861.6735', 'sell': '5864.9063'}}
+        elif ut.zb_exchange.lower() == exchange.lower():
+            msg = zb_data.zb_api_data(symbol).ticker()
         else:
             print('no support exchange')
 

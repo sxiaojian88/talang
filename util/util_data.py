@@ -12,6 +12,8 @@ ETH_COIN = "ETH"
 huobipro_exchange = "HuoBiPro"
 #okex exchange名
 okex_exchange = "OkEx"
+#zb exchange名
+zb_exchange = "zb"
 
 #美元汇率
 USDT_CNY=6.45

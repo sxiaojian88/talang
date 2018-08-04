@@ -1,6 +1,6 @@
 import time,gevent,decimal
-from zb_api_data import zb_api_data
-from zb_api_trade import zb_api_trade
+from talang.exchanges.zb.zb_api_data import zb_api_data
+from talang.exchanges.zb.zb_api_trade import zb_api_trade
 
 list=[]
 isMoney=0
