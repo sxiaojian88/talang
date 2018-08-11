@@ -20,6 +20,10 @@ USDT_CNY=6.45
 #okex交易每次最大可送的值（okex限制）
 MAX_BATCH_NUM_OKEX = 5
 
+#交易所返回kline的最大条数
+MAX_KLINE_SIZE_OKEX = 2000  #okex最大返回2000
+MAX_KLINE_SIZE_ZB = 1000    #zb最大返回1000
+
 #rest API请求失败时，重试次数
 RE_TRY_TIMES = 10
 #方向

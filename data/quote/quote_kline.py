@@ -14,13 +14,13 @@ okexcoinFuture = okex_util.getOkcoinFuture()
 
 class QuoteKline:
 
-    def get_kline_value(self, exchange, base_coin, quote_coin, type='5min'):
+    def get_kline_value(self, exchange, base_coin, quote_coin, type='5min', size='1000'):
         qt = q_ticker.QuoteTicker()
         quote_coin_usdt_price = qt.get_usdt_value_by_coin(exchange, quote_coin)
 
         kline = Kline()
         ex_kl = QuoteKline()
-        msg = ex_kl.get_msg(exchange, base_coin, quote_coin, type)
+        msg = ex_kl.get_msg(exchange, base_coin, quote_coin, type, size)
         # Date time
 
         for k in msg:
@@ -40,12 +40,12 @@ class QuoteKline:
 
 
     @classmethod
-    def get_msg(cls, exchange, base_coin, quote_coin, type='5min'):
+    def get_msg(cls, exchange, base_coin, quote_coin, type='5min', size='1000'):
         # 组合symbol值
         symbol = ut.get_symbol(exchange, base_coin, quote_coin)
         msg = ''
         if ut.okex_exchange.lower() == exchange.lower():
-            msg = okexcoinSpot.kline(symbol, type)
+            msg = okexcoinSpot.kline(symbol, type, size)
             #print(msg)
             #[[1532986200000,"0.01010073","0.01010073","0.01010073","0.01010073","12.7557"],[1532986260000,"0.01010381","0.01010381","0.01009715","0.01009715","24.53925"],
         else:

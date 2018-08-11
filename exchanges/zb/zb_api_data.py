@@ -29,7 +29,7 @@ class zb_api_data(request_call):
         url=self.host+'/data/v1/trades'
         return request_call.zb_call(url,self.dict())
     #K线
-    def kline(self,type='5min',size=1000):
+    def kline(self,type='5min',size='1000'):
         url=self.host+"/data/v1/kline"
         dict_in = {'market': self.currency, 'type':type, 'size':size}
         return request_call.zb_call(url,dict_in)

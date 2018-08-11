@@ -13,7 +13,7 @@ class OKCoinSpot:
         self.__secretkey = secretkey
 
     # 获取OKCOIN现货kline行情信息
-    def kline(self, symbol='', type='5min',size='1000'):
+    def kline(self, symbol='', type='5min', size='1000'):
         TICKER_RESOURCE = "/api/v1/kline.do"
         params = ''
         if symbol:
