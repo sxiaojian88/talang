@@ -4,6 +4,8 @@ import talang.util.util_data as ut
 from datetime import datetime
 from talang.util.model.Order import Order
 from talang.util.model.Order import Orders
+import time
+from talang.util.Logger import Logger
 # 现货API
 okexcoinSpot = okex_util.getOkcoinSpot()
 # 期货API
@@ -51,9 +53,21 @@ class spot_order_query():
             symbol = ut.get_symbol(exchange, base_coin, quote_coin)
             msg = ''
             if ut.okex_exchange.lower() == exchange.lower():
-                msg = okexcoinSpot.orderInfo(symbol, order_id)
-                #print(msg)
                 #{'result': True, 'orders': [{'amount': 1, 'avg_price': 0, 'create_date': 1530020990000, 'deal_amount': 0, 'order_id': 480894458, 'orders_id': 480894458, 'price': 108, 'status': 0, 'symbol': 'EOS_USDT', 'type': 'sell'}]}
+                i = 1
+                while True:
+                    try:
+                        msg = okexcoinSpot.orderInfo(symbol, order_id)
+                        #print(msg)
+                        if msg['result'] is True:
+                            return msg
+                    except Exception as e:
+                        #Logger.error(cls.__class__.__name__, "Error in get_msg: %s" % e)
+                        i = i + 1
+                        print("error:" + symbol)
+                        time.sleep(1)
+                    if i > ut.RE_TRY_TIMES:
+                        return None
             else:
                 print('no support exchange')
 

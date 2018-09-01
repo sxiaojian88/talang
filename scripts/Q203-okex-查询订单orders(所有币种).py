@@ -5,7 +5,7 @@ from talang.util.model.Order import Orders
 import talang.trader.query.spot_order_query as spot_order_q
 import time
 from datetime import datetime
-import talang.manage.account.account_api as act_api
+import talang.manage.account.account_spot_service as act_api
 
 
 def main():
@@ -19,7 +19,7 @@ def main():
     #sybs = ex_qs.get_all_symbols(exchange_name)
     #----------------------------------------------
     #查询账号中冻结的coins，再根据冻结的coins查询相关symbols
-    act = act_api.AccountApi()
+    act = act_api.AccountSpotService()
     coins = act.get_okex_freezed_coins()
     sybs = ex_qs.get_symbols_by_coins(exchange_name, coins)
 
@@ -32,11 +32,14 @@ def main():
     print('begin:%s' % datetime.now().strftime("%Y%m%d %H:%M:%S.%f"))
 
     for syb in sybs.symbols_list:
-        orders = ex_qt.get_orders_value(exchange_name, syb.base_coin, syb.quote_coin, order_id)
-        orders_total.add_orders(orders)
-        time.sleep(0.06)
-        #add process....description
-
+        try:
+            orders = ex_qt.get_orders_value(exchange_name, syb.base_coin, syb.quote_coin, order_id)
+            orders_total.add_orders(orders)
+            time.sleep(0.06)
+            #add process....description
+        except Exception as e:
+            print(syb.base_coin + syb.quote_coin + ":continue")
+            continue
     orders_total.print_detail()
     print('end:%s' % datetime.now().strftime("%Y%m%d %H:%M:%S.%f"))
 

@@ -2,7 +2,7 @@
 import talang.exchanges.okex.util as okex_util
 import talang.data.quote.quote_ticker as quote_ticker
 import talang.util.util_data as ut
-import talang.util.model.Account as acct
+import talang.util.model.AccountSpot as acct
 
 # 现货API
 okcoinSpot = okex_util.getOkcoinSpot()
@@ -10,7 +10,7 @@ okcoinSpot = okex_util.getOkcoinSpot()
 okcoinFuture = okex_util.getOkcoinFuture()
 
 
-class AccountApi():
+class AccountSpotService():
     """
     {
     'currency': 'QC', 
@@ -46,7 +46,7 @@ class AccountApi():
         total_btc = 0.0
         total_usdt = 0.0
 
-        okex_account = acct.SpotAccount()
+        okex_account = acct.AccountSpot()
         okex_account.exchange = ut.okex_exchange
 
         for i in range(0, len(keys)):
@@ -110,6 +110,6 @@ class AccountApi():
 
 
 if __name__ == "__main__":
-    act = AccountApi()
+    act = AccountSpotService()
     okex_account = act.get_account_okex()
     okex_account.print_detail()

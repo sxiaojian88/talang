@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import talang.manage.account.account_zmq as act_zmq
-import talang.manage.account.account_api as act_api
+import talang.manage.account.account_spot_service as act_api
 
 
 def main():
@@ -9,7 +9,7 @@ def main():
     # 无
     # =============================================
     #以Tiker行情数据计算okex资产
-    act = act_api.AccountApi()
+    act = act_api.AccountSpotService()
     okex_account = act.get_account_okex()
     okex_account.print_detail()
 

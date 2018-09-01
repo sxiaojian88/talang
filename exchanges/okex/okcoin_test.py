@@ -13,11 +13,11 @@ okcoinFuture = okex_util.getOkcoinFuture()
 print(u' 现货行情 ')
 print(okcoinSpot.ticker('btc_usdt'))
 
-print(u' 现货深度 ')
-print(okcoinSpot.depth('btc_usdt'))
+#print(u' 现货深度 ')
+#print(okcoinSpot.depth('btc_usdt'))
 
-print(u' 用户现货账户信息 ')
-print(okcoinSpot.userInfo())
+#print(u' 用户现货账户信息 ')
+#print(okcoinSpot.userInfo())
 
 '''print (u' 现货下单 ')
 print (okcoinSpot.trade('btc_cny','buy_market','50'))'''
@@ -79,8 +79,8 @@ print (okcoinSpot.trade('btc_cny','buy_market','50'))'''
 # print (u'获取预估交割价')
 # print (okcoinFuture.future_estimated_price('ltc_usd'))
 
-# print (u'获取全仓账户信息')
-# print (okcoinFuture.future_userinfo())
+print (u'获取全仓账户信息')
+print (okcoinFuture.future_userinfo())
 
 # print (u'获取全仓持仓信息')
 # print (okcoinFuture.future_position('ltc_usd','this_week'))
