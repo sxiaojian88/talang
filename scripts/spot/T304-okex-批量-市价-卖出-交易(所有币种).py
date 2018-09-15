@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import talang.trader.trade.spot_trade as spot_trad_api
-import talang.manage.account.account_spot_service as act_api
+import talang.manage.account.spot_account_service as act_api
 
 def main():
 

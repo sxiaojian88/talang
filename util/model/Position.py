@@ -1,13 +1,99 @@
-'''
-期货交易中的持有仓位信息, 由GetPosition()函数返回此结构数组
-{
-    MarginLevel     :杆杠大小, OKCoin为10或者20。
-    Amount          :持仓量, OKCoin表示合约的份数(整数且大于1)
-    CanCover        :可平量, 只有股票有此选项, 表示可以平仓的数量(股票为T+1)今日仓不能平
-    FrozenAmount    :仓位冻结量
-    Price           :持仓均价
-    Profit          :持仓浮动盈亏(数据货币单位：BTC/LTC, 传统期货单位:RMB, 股票不支持此字段, 注: OKCoin期货全仓情况下指实现盈余, 并非持仓盈亏, 逐仓下指持仓盈亏)
-    Type            :PD_LONG为多头仓位(CTP中用closebuy_today平仓), PD_SHORT为空头仓位(CTP用closesell_today)平仓, (CTP期货中)PD_LONG_YD为咋日多头仓位(用closebuy平), PD_SHORT_YD为咋日空头仓位(用closesell平)
-    ContractType    :商品期货为合约代码, 股票为'交易所代码_股票代码', 具体参数SetContractType的传入类型
-}
-'''
+
+from talang.util.model.ModelBase import ModelBase
+
+class Position(ModelBase):
+    '''
+    # Request
+    POST https://www.okex.com/api/v1/future_position_4fix.do
+    # Response
+    {'result': True, 'holding': [
+        {'buy_price_avg': 0, 'symbol': 'eth_usd', 'lever_rate': 10, 'buy_available': 0, 'contract_id': 201809210020060,
+         'sell_risk_rate': '104.79', 'buy_amount': 0, 'buy_risk_rate': '1,000,000.00', 'profit_real': 0.00786862,
+         'contract_type': 'next_week', 'sell_flatprice': '186.566', 'buy_bond': 0, 'sell_profit_lossratio': '4.79',
+         'buy_flatprice': '0.000', 'buy_profit_lossratio': '0.00', 'sell_amount': 16, 'sell_bond': 0.09424238,
+         'sell_price_cost': 169.775, 'buy_price_cost': 0, 'create_date': 1536571738000, 'sell_price_avg': 169.775,
+         'sell_available': 16}]}
+    '''
+    def __init__(self):
+        self.symbol = ''             #btc_usd ltc_usd eth_usd etc_usd bch_usd
+        self.lever_rate = '10'         #杠杆倍数
+        self.contract_id = ''        #合约id
+        self.contract_type = 'next_week' #合约类型
+        self.create_date = ''        #创建日期
+        self.profit_real = 0         #已实现盈余
+
+        self.buy_profit_lossratio=0  #多仓盈亏比
+        self.buy_amount = 0          #多仓数量
+        self.buy_available = 0       #多仓可平仓数量
+        self.buy_bond = 0            #多仓保证金
+        self.buy_price_avg = 0.0     #多仓开仓平均价
+        self.buy_flatprice = 0       #多仓强平价格
+        self.buy_price_cost = 0      #多仓结算基准价
+        self.buy_risk_rate = '1000000' #
+
+        self.sell_profit_lossratio=0 #空仓盈亏比
+        self.sell_amount = 0         #空仓数量
+        self.sell_available= 0       #空仓可平仓数量
+        self.sell_bond = 0           #空仓保证金
+        self.sell_price_avg = 0      #空仓开仓平均价
+        self.sell_flatprice = 0      #空仓强平价格
+        self.sell_price_cost = 0     #空仓结算基准价
+        self.sell_risk_rate = '104.79' #
+
+    def LongOrShort(self):
+        result = 'NA'
+        if self.buy_amount > 0:
+            result = 'LONG'
+        elif self.sell_amount > 0:
+            result = 'SHORT'
+        return result
+
+class Positions:
+    def __init__(self):
+        self.Positions_list = []
+
+    def add_position(self, position):
+        self.Positions_list.append(position)
+
+    def add_positions(self, positions):
+        if len(positions.Positions_list) > 0:
+            self.Positions_list.extend(positions.Positions_list)
+
+    def print_detail(self):
+        if len(self.Positions_list) == 0:
+            return
+        total_with = 10 + 15 * 15
+        print('=' * total_with)
+        format_tile = "%-10s%-15s%-15s%10s%10s%15s" \
+                      "%15s%15s%15s" \
+                      "%10s%10s%10s" \
+                      "%10s%10s%10s"
+        print(format_tile % ("No.", "多空方向", "time", "symbol", "杠杆倍数", "contract_id",
+                             "contract_type", "create_date", "已实现盈余",
+                             "多仓盈亏比","多仓数量", "多仓开仓平均价",
+                             "空仓盈亏比", "空仓数量", "空仓开仓平均价"
+                             ))
+        print('-' * total_with)
+        format_value = "%-10d%-10s%15s%10s%10s%20s" \
+                       "%12s%20s%15.4f" \
+                       "%15.4f%15.4f%15.4f" \
+                       "%15.4f%15.4f%15.4f"
+        i = 1
+        for position in self.Positions_list:
+
+            print(format_value % (
+            i, position.LongOrShort(), position.time, position.symbol, position.lever_rate, position.contract_id,
+            position.contract_type, position.create_date, position.profit_real,
+            position.buy_profit_lossratio, position.buy_amount, position.buy_price_avg,
+            position.sell_profit_lossratio, position.sell_amount, position.sell_price_avg
+            ))
+            i = i + 1
+        print('=' * total_with)
+
+
+
+
+
+
+
+

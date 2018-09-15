@@ -79,8 +79,8 @@ print (okcoinSpot.trade('btc_cny','buy_market','50'))'''
 # print (u'获取预估交割价')
 # print (okcoinFuture.future_estimated_price('ltc_usd'))
 
-print (u'获取全仓账户信息')
-print (okcoinFuture.future_userinfo())
+#print (u'获取全仓账户信息')
+#print (okcoinFuture.future_userinfo())
 
 # print (u'获取全仓持仓信息')
 # print (okcoinFuture.future_position('ltc_usd','this_week'))
@@ -97,8 +97,8 @@ print (okcoinFuture.future_userinfo())
 # print (u'期货获取订单信息')
 # print (okcoinFuture.future_orderInfo('ltc_usd','this_week','47231812','0','1','2'))
 
-# print (u'期货逐仓账户信息')
-# print (okcoinFuture.future_userinfo_4fix())
+print (u'期货逐仓账户信息')
+print (okcoinFuture.future_userinfo_4fix())
 
-# print (u'期货逐仓持仓信息')
-# print (okcoinFuture.future_position_4fix('ltc_usd','this_week',1))
+print (u'期货逐仓持仓信息')
+print (okcoinFuture.future_position_4fix('eth_usd','next_week',1))

@@ -46,7 +46,7 @@ class AccountFuture:
 
         total_with = 12 + 5*15 + 6*15 + 10 + 10
         print('=' * (total_with))
-        format_tile = "%-10s%-12s%15s%15s%15s%15s%15s%15s%15s%15s%15s%15s%10s"
+        format_tile = "%-10s%-12s%15s%15s%15s%15s%15s%15s%15s%15s%15s%15s%15s%10s"
         print(format_tile % ("No.", "Currency", "account_rights", "keep_deposit", "profit_real", "profit_unreal",
                             "risk_rate",
                             "btc_price", "btc_worth", "usdt_price", "usdt_worth",

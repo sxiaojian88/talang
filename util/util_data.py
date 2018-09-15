@@ -26,10 +26,14 @@ MAX_KLINE_SIZE_ZB = 1000    #zb最大返回1000
 
 #rest API请求失败时，重试次数
 RE_TRY_TIMES = 10
-#方向
+#三角套利方向
 RIGHT_DIRECT = 'right'
 LEFT_DIRECT = 'left'
 
+#okex合约支持币种对
+OKEX_FUTURE_SYMBOLS = ["btc_usd", "ltc_usd", "eth_usd", "etc_usd", "bch_usd", "btg_usd", "xrp_usd", "eos_usd"]
+#okex合约执行的期限类别
+OKEX_FUTURE_CONTRACT_TYPES= ["this_week", "next_week", "quarter"]
 def get_symbol(exchange, base_coin, quote_coin):
     # 组合symbol值
     if okex_exchange.lower() == exchange.lower():
