@@ -16,8 +16,8 @@ okex_exchange = "OkEx"
 zb_exchange = "zb"
 
 #美元汇率
-USDT_CNY=6.45
-#okex交易每次最大可送的值（okex限制）
+USDT_CNY=6.8
+#okex批量spot交易每次最大可送的值（okex限制）
 MAX_BATCH_NUM_OKEX = 5
 
 #交易所返回kline的最大条数
@@ -34,6 +34,20 @@ LEFT_DIRECT = 'left'
 OKEX_FUTURE_SYMBOLS = ["btc_usd", "ltc_usd", "eth_usd", "etc_usd", "bch_usd", "btg_usd", "xrp_usd", "eos_usd"]
 #okex合约执行的期限类别
 OKEX_FUTURE_CONTRACT_TYPES= ["this_week", "next_week", "quarter"]
+#okex合约多仓方向
+OKEX_LONG = 'LONG'
+#okex合约空仓方向
+OKEX_SHORT = 'SHORT'
+#okex合约未知
+OKEX_NA = 'NA'
+#okex完成状态
+OKEX_YES = 'YES'
+#okex未完成状态
+OKEX_NO = 'NO'
+#SQLPLITE数据库保存的地址
+SQLPLITE_PATH = "D:\\sqlite_files\\talang.database"
+
+
 def get_symbol(exchange, base_coin, quote_coin):
     # 组合symbol值
     if okex_exchange.lower() == exchange.lower():

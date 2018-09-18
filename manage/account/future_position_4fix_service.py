@@ -39,7 +39,7 @@ class FuturePositionFixService():
         '''
 
         res = okcoinFuture.future_position_4fix(symbol, contractType, type1)
-        print(res)
+        #print(res)
         result = res["result"]
         
         msg_holdings = res["holding"]

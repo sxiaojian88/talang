@@ -1,5 +1,7 @@
 
 from talang.util.model.ModelBase import ModelBase
+import talang.util.util_data as ut
+
 
 class Position(ModelBase):
     '''
@@ -41,12 +43,41 @@ class Position(ModelBase):
         self.sell_risk_rate = '104.79' #
 
     def LongOrShort(self):
-        result = 'NA'
+        result = ut.OKEX_NA
         if self.buy_amount > 0:
-            result = 'LONG'
+            result = ut.OKEX_LONG
         elif self.sell_amount > 0:
-            result = 'SHORT'
+            result = ut.OKEX_SHORT
         return result
+
+    def print_detail(self, i=1):
+
+        total_with = 10 + 15 * 15
+
+        if i == 1:
+            print('=' * total_with)
+            format_tile = "%-10s%-15s%-15s%10s%10s%15s" \
+                          "%15s%15s%15s" \
+                          "%10s%10s%10s" \
+                          "%10s%10s%10s"
+            print(format_tile % ("No.", "多空方向", "time", "symbol", "杠杆倍数", "contract_id",
+                                 "contract_type", "create_date", "已实现盈余",
+                                 "多仓盈亏比","多仓数量", "多仓开仓平均价",
+                                 "空仓盈亏比", "空仓数量", "空仓开仓平均价"
+                                 ))
+            print('-' * total_with)
+
+        format_value = "%-10d%-10s%15s%10s%10s%20s" \
+                       "%12s%20s%15.4f" \
+                       "%15.4f%15.4f%15.4f" \
+                       "%15.4f%15.4f%15.4f"
+        print(format_value % (
+        i, self.LongOrShort(), self.time, self.symbol, self.lever_rate, self.contract_id,
+        self.contract_type, self.create_date, self.profit_real,
+        self.buy_profit_lossratio, self.buy_amount, self.buy_price_avg,
+        self.sell_profit_lossratio,self.sell_amount, self.sell_price_avg
+        ))
+
 
 class Positions:
     def __init__(self):
@@ -62,33 +93,11 @@ class Positions:
     def print_detail(self):
         if len(self.Positions_list) == 0:
             return
-        total_with = 10 + 15 * 15
-        print('=' * total_with)
-        format_tile = "%-10s%-15s%-15s%10s%10s%15s" \
-                      "%15s%15s%15s" \
-                      "%10s%10s%10s" \
-                      "%10s%10s%10s"
-        print(format_tile % ("No.", "多空方向", "time", "symbol", "杠杆倍数", "contract_id",
-                             "contract_type", "create_date", "已实现盈余",
-                             "多仓盈亏比","多仓数量", "多仓开仓平均价",
-                             "空仓盈亏比", "空仓数量", "空仓开仓平均价"
-                             ))
-        print('-' * total_with)
-        format_value = "%-10d%-10s%15s%10s%10s%20s" \
-                       "%12s%20s%15.4f" \
-                       "%15.4f%15.4f%15.4f" \
-                       "%15.4f%15.4f%15.4f"
         i = 1
         for position in self.Positions_list:
-
-            print(format_value % (
-            i, position.LongOrShort(), position.time, position.symbol, position.lever_rate, position.contract_id,
-            position.contract_type, position.create_date, position.profit_real,
-            position.buy_profit_lossratio, position.buy_amount, position.buy_price_avg,
-            position.sell_profit_lossratio, position.sell_amount, position.sell_price_avg
-            ))
+            position.print_detail(i)
             i = i + 1
-        print('=' * total_with)
+
 
 
 
