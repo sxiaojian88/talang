@@ -1,5 +1,6 @@
 import talang.exchanges.okex.util as okex_util
 import talang.util.util_data as ut
+from talang.util.Logger import Logger
 import talang.util.model.Position as position_model
 import talang.util.model.GreedMark as greed_mark_model
 import time
@@ -30,14 +31,16 @@ class GreedStrategyOkexFutureService:
             new_greed_mark = False
             #根据contract_id查询是否已有
             #greedmark = self.greed_marks.get_greedmark(position.contract_id)
-            greedmark = self.greed_marks.select_greedmark_from_database(position.contract_id)
+            greedmark = self.greed_marks.select_greedmark_from_database(position.contract_id, position.LongOrShort(), ut.OKEX_NO)
 
-            if greedmark == None:
-                new_greed_mark = True
+            #greedmark新建，或者amount有变动的时候重新初始化，amount有变动说明有可能追加仓位，会带来利润率瞬间变化
+            if greedmark == None or position.get_amount() != greedmark.amount:
                 greedmark = greed_mark_model.GreedMark()
                 greedmark.exchange = ut.okex_exchange
                 greedmark.time = datetime.now().strftime("%Y%m%d %H:%M:%S")  #统计时点时间
                 greedmark.contract_id = position.contract_id
+                greedmark.long_or_short = position.LongOrShort()
+                greedmark.amount = position.get_amount()
                 if position.LongOrShort() == ut.OKEX_LONG:
                     greedmark.top_profit_loss_ratio = position.buy_profit_lossratio
                     greedmark.bottom_profit_loss_ratio = position.buy_profit_lossratio
@@ -57,12 +60,17 @@ class GreedStrategyOkexFutureService:
                 greedmark.bottom_profit_loss_ratio = greedmark.now_profit_loss_ratio
 
             if greedmark.now_profit_loss_ratio < greedmark.loss_scope or \
-                    (greedmark.now_profit_loss_ratio < greedmark.top_profit_loss_ratio * (1- greedmark.profit_liquidation_scope) and \
-                     greedmark.now_profit_loss_ratio > greedmark.profit_scope ):
+                    (greedmark.now_profit_loss_ratio < greedmark.top_profit_loss_ratio * (1 - greedmark.profit_liquidation_scope/100) \
+                     and greedmark.now_profit_loss_ratio > greedmark.profit_scope ):
                 greedmark.liquidation_mark = ut.OKEX_YES
                 greedmark.liquidation_mark_time = datetime.now().strftime("%Y%m%d %H:%M:%S")  #统计时点时间
 
-                trade_service.liquidate_4fix_position(position)
+                #强平该position
+                greedmark.liquidation_complete = trade_service.do_liquidate_future_trade(position)
+                greedmark.liquidation_complete_time = datetime.now().strftime("%Y%m%d %H:%M:%S")
+                if greedmark.liquidation_complete == ut.OKEX_YES:
+                    #将position插入到数据库表中记录起来
+                    trade_service.record_liquidate_4fix_position(position)
 
             # add and update greedmark
             #if new_greed_mark == True:
@@ -84,5 +92,8 @@ if __name__ == "__main__":
 
     greed_strategy_service = GreedStrategyOkexFutureService()
     while True:
-        greed_strategy_service.do_liquidation_mark()
+        try:
+            greed_strategy_service.do_liquidation_mark()
+        except Exception as e:
+            Logger.error('greed_strategy_service', "do_liquidation_mark: %s" % e)
         time.sleep(10)
