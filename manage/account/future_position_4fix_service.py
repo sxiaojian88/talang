@@ -61,7 +61,7 @@ class FuturePositionFixService():
             #有则添加，持仓中，有可能多空有其一，或者两者都有，则各分别添加，多空都有的情况下变为两条position加入
             if position.buy_amount > 0:
                 position.exchange = ut.okex_exchange                                                    # 此账号所属交易所，如果是所有交易所总和统计，以ALL表示
-                position.time = datetime.now().strftime("%Y%m%d %H:%M:%S.%f")                           # 统计时点时间
+                position.time = datetime.now().strftime("%Y%m%d %H:%M:%S")                           # 统计时点时间
                 position.symbol = msg_holding['symbol']                                                 # btc_usd ltc_usd eth_usd etc_usd bch_usd
                 position.lever_rate = msg_holding['lever_rate']                                         # 杠杆倍数
                 position.contract_id = msg_holding['contract_id']                                       # 合约id
@@ -85,7 +85,7 @@ class FuturePositionFixService():
             #有则添加，持仓中，有可能多空有其一，或者两者都有，则各分别添加，多空都有的情况下变为两条position加入
             if position_sell.sell_amount > 0:
                 position_sell.exchange = ut.okex_exchange                                                    # 此账号所属交易所，如果是所有交易所总和统计，以ALL表示
-                position_sell.time = datetime.now().strftime("%Y%m%d %H:%M:%S.%f")                           # 统计时点时间
+                position_sell.time = datetime.now().strftime("%Y%m%d %H:%M:%S")                           # 统计时点时间
                 position_sell.symbol = msg_holding['symbol']                                                 # btc_usd ltc_usd eth_usd etc_usd bch_usd
                 position_sell.lever_rate = msg_holding['lever_rate']                                         # 杠杆倍数
                 position_sell.contract_id = msg_holding['contract_id']                                       # 合约id

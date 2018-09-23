@@ -68,7 +68,7 @@ class GreedMark(ModelBase):
 
     def print_detail(self, i=1):
 
-        total_with = 10 + 16 * 15
+        total_with = 10 + 17 * 15
 
         if i == 1:
             print('=' * total_with)
@@ -137,15 +137,16 @@ class GreedMarks:
             greed_mark.profit_scope = float(obj[5])  # 最低盈利幅度，超过此盈利幅度才考虑止盈强平
             greed_mark.profit_liquidation_scope = float(obj[6])  # 盈利情况下，强平回调比例，0.2表示比盈利最高点回调20%的时候强平止盈
 
-            greed_mark.last_profit_loss_ratio = float(obj[7])  # 最近的上一次查询的盈亏比率
-            greed_mark.now_profit_loss_ratio = float(obj[8])  # 现在查询的“盈亏比率”
-            greed_mark.top_profit_loss_ratio = float(obj[9])  # 表示“盈亏比率”曾经达到的最高点
-            greed_mark.bottom_profit_loss_ratio = float(obj[10])  # 表示“盈亏比率”曾经达到的最低点
+            greed_mark.amount = float(obj[7])
+            greed_mark.last_profit_loss_ratio = float(obj[8])  # 最近的上一次查询的盈亏比率
+            greed_mark.now_profit_loss_ratio = float(obj[9])  # 现在查询的“盈亏比率”
+            greed_mark.top_profit_loss_ratio = float(obj[10])  # 表示“盈亏比率”曾经达到的最高点
+            greed_mark.bottom_profit_loss_ratio = float(obj[11])  # 表示“盈亏比率”曾经达到的最低点
 
-            greed_mark.liquidation_mark = obj[11]  # 强平标志,默认是'NO'，强平信号出现时候标'YES',标'YES'之后就要执行强平，不再回退到'NO'状态
-            greed_mark.liquidation_mark_time = obj[12]  # 统计时点时间       # 标志强退的时间点
-            greed_mark.liquidation_complete = obj[13]  # 跟踪是否已经完成了强平交易
-            greed_mark.liquidation_complete_time = obj[14]  # 统计时点时间   # 强平交易完成时间点
+            greed_mark.liquidation_mark = obj[12]  # 强平标志,默认是'NO'，强平信号出现时候标'YES',标'YES'之后就要执行强平，不再回退到'NO'状态
+            greed_mark.liquidation_mark_time = obj[13]  # 统计时点时间       # 标志强退的时间点
+            greed_mark.liquidation_complete = obj[14]  # 跟踪是否已经完成了强平交易
+            greed_mark.liquidation_complete_time = obj[15]  # 统计时点时间   # 强平交易完成时间点
             return greed_mark
         return None
 

@@ -28,19 +28,22 @@ class GreedStrategyOkexFutureService:
         okex_positions.print_detail()
         i = 1
         for position in okex_positions.Positions_list:
-            new_greed_mark = False
             #根据contract_id查询是否已有
-            #greedmark = self.greed_marks.get_greedmark(position.contract_id)
+            #print("%s,%s,%s"%(position.contract_id,position.LongOrShort(), ut.OKEX_NO))
             greedmark = self.greed_marks.select_greedmark_from_database(position.contract_id, position.LongOrShort(), ut.OKEX_NO)
+
 
             #greedmark新建，或者amount有变动的时候重新初始化，amount有变动说明有可能追加仓位，会带来利润率瞬间变化
             if greedmark == None or position.get_amount() != greedmark.amount:
+                #print("new greedmark")
+                #,%d,%d"%(position.get_amount(),greedmark.amount))
                 greedmark = greed_mark_model.GreedMark()
                 greedmark.exchange = ut.okex_exchange
                 greedmark.time = datetime.now().strftime("%Y%m%d %H:%M:%S")  #统计时点时间
-                greedmark.contract_id = position.contract_id
-                greedmark.long_or_short = position.LongOrShort()
+                greedmark.contract_id = str(position.contract_id)
+                greedmark.long_or_short = str.strip(position.LongOrShort())
                 greedmark.amount = position.get_amount()
+
                 if position.LongOrShort() == ut.OKEX_LONG:
                     greedmark.top_profit_loss_ratio = position.buy_profit_lossratio
                     greedmark.bottom_profit_loss_ratio = position.buy_profit_lossratio
@@ -73,7 +76,6 @@ class GreedStrategyOkexFutureService:
                     trade_service.record_liquidate_4fix_position(position)
 
             # add and update greedmark
-            #if new_greed_mark == True:
             self.greed_marks.insert_greedmark_to_database(greedmark)
             greedmark.print_detail(i)
             i = i + 1

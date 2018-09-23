@@ -118,23 +118,23 @@ class Position(ModelBase):
 
         if i == 1:
             print('=' * total_with)
-            format_tile = "%-10s%-15s%-15s%10s%10s%15s" \
+            format_tile = "%-10s%-15s%15s%15s%10s%10s" \
                           "%15s%15s%15s" \
                           "%10s%10s%10s" \
                           "%10s%10s%10s"
-            print(format_tile % ("No.", "多空方向", "time", "symbol", "杠杆倍数", "contract_id",
+            print(format_tile % ("No.", "contract_id", "time", "多空方向", "symbol", "杠杆倍数",
                                  "contract_type", "create_date", "已实现盈余",
                                  "多仓盈亏比","多仓数量", "多仓开仓平均价",
                                  "空仓盈亏比", "空仓数量", "空仓开仓平均价"
                                  ))
             print('-' * total_with)
 
-        format_value = "%-10d%-10s%15s%10s%10s%20s" \
+        format_value = "%-10d%-20s%-15s%10s%10s%15s" \
                        "%12s%20s%15.4f" \
                        "%15.4f%15.4f%15.4f" \
                        "%15.4f%15.4f%15.4f"
         print(format_value % (
-        i, self.LongOrShort(), self.time, self.symbol, self.lever_rate, self.contract_id,
+        i, self.contract_id, self.time, self.LongOrShort(), self.symbol, self.lever_rate,
         self.contract_type, self.create_date, self.profit_real,
         self.buy_profit_lossratio, self.buy_amount, self.buy_price_avg,
         self.sell_profit_lossratio, self.sell_amount, self.sell_price_avg
