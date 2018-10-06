@@ -66,7 +66,7 @@ class QuoteKline:
 if __name__ == '__main__':
     ex_qt = QuoteKline()
     exchange_name = 'okex'
-    base_coin = 'eos'
+    base_coin = 'btc'
     quote_coin = 'usdt'
     kl = Kline()
     kl = ex_qt.get_kline_value(exchange_name, base_coin, quote_coin)

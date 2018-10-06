@@ -14,7 +14,9 @@ def main():
         try:
             greed_strategy_service.do_liquidation_mark()
         except Exception as e:
-            Logger.error('greed_strategy_service', "do_liquidation_mark: %s" % e)
+            #Logger.error('greed_strategy_service', "do_liquidation_mark: %s" % e)
+            time.sleep(50)
+            pass
         time.sleep(10)
 
 

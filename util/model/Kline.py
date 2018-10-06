@@ -37,11 +37,15 @@ class Kline:
         self.Volume_to_value = []  # Volume_to_value = Last * Volume
 
     @staticmethod
+    def tablename():
+        return 'kline'
+
+    @staticmethod
     def columns():
         """
         Return static columns names
         """
-        return ['symbol', 'time', 'ticker_id', 'open', 'high', 'low',  'close', 'volume', 'volume_to_value']
+        return ['exchange', 'symbol', 'time', 'kline_id', 'open', 'high', 'low',  'close', 'volume', 'volume_to_value']
 
     @staticmethod
     def types():
@@ -55,7 +59,7 @@ class Kline:
         """
         Return values in a list
         """
-        return [self.Symbol] + [self.Time] + [self.Ticker_id] + \
+        return [self.Exchange] + [self.Symbol] + [self.Time] + [self.Ticker_id] + \
                [self.Open] + [self.High] + [self.Low] + [self.Close] + [self.Volume] + \
                [self.Volume_to_value]
 
